@@ -1,6 +1,6 @@
 <launch>
     <arg name="model" default="$(find msd700_control)/urdf/irbot.urdf.xacro"/>
-    <arg name="rvizconfig" default="$(find msd700_control)/rviz/pose_estimation.rviz" />
+    <arg name="rvizconfig" default="" />
 
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rvizconfig)" required="true" />

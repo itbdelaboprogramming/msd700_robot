@@ -1,0 +1,30 @@
+<launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find msd700_navigations)/maps/fluid_lab.yaml"/>
+  <arg name="move_forward_only" default="false"/>
+  <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="rvizconfig" default="$(find msd700_visual)/rviz/pose_estimation.rviz" />
+
+  <!-- Map server -->
+  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+
+  <!-- AMCL -->
+  <include file="$(find msd700_navigations)/launch/algorithm/amcl.launch"/>
+
+  <!-- move_base -->
+  <include file="$(find msd700_launch)/launch/move_base.launch">
+    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+  </include>
+
+  <!-- rviz -->
+  <group if="$(arg open_rviz)"> 
+    <include file="$(find msd700_visual)/launch/rviz_launch.launch" args="$(arg rvizconfig)"/>
+  </group>
+
+  <!-- other files -->
+  <include file="$(find msd700_navigations)/launch/primitive/bridger.launch"/>
+  <include file="$(find msd700_launch)/launch/lidar_scanner.launch"/>
+  <include file="$(find msd700_control)/launch/robot_localization.launch"/>
+  
+</launch>
