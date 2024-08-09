@@ -1,7 +1,7 @@
 # Robot Repository
 
 Description: 
-This repo contains all of the robot repository containing robot movement, SLAM, and path planning
+This repo contains all of the robot repository containing robot movement, SLAM, path planning, and simulation
 
 The main task for this robot is creating a map for featureless tunnel autonomously and use the acquired map to localize and move the robot from one point to another
 
@@ -12,7 +12,7 @@ The packages are listed the following:
     - msd700_control            : two main task (convert from cmd_vel to harware_command and integration of robot sensors)
     - msd700_mapping            : Contains multiple SLAM localization algorithm and the automapping
     - msd700_navigation         : Contains navigation 
-    - third_party               : such as rplidar_ros pkg
+    - third_party               : Other package we're using such as rplidar_ros pkg
 
 
 
