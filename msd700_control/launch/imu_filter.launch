@@ -5,6 +5,9 @@
         <rosparam command="load" file="$(arg pose_config_filepath)"/>
     </node>
     
+    <!-- <node pkg="msd_pose_estimation" type="hardware_state_converter.py" name="new_robot_state" output="screen"></node> -->
+    
+
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_node" output="screen">
         <param name="gain" value="0.01"/>
         <remap from="/imu/data" to="/imu/from_filter"/>
