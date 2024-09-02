@@ -1,8 +1,9 @@
 <launch>
   <arg name="use_teleop" default="false"/>
   <arg name="open_rviz" default="false"/>
-  <arg name="rviz_config" default="$(find msd700_control)/rviz/pose_estimation.rviz"/>
+  <arg name="rviz_config" value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
 
+  <include file="$(find msd700_launch)/launch/robot_description.launch"/> 
   <include file="$(find msd700_launch)/launch/serial_launch.launch"/>  
   <include file="$(find msd700_control)/launch/imu_filter.launch" />
 
@@ -21,11 +22,9 @@
   </group>
 
   <group if="$(arg open_rviz)"> 
-    <include file="$(find msd700_visual)/launch/rviz.launch">
-      <param name="rvizconfig" command="$(arg rviz_config)"/>
-      <!-- <param name="rvizconfig" value="$(arg rviz_config)"/> -->
-      <!-- <param name="rvizconfig" default="$(arg rviz_config)"/> -->
-    <!-- <include file="$(find msd700_visual)/launch/rviz_launch.launch" args="$(arg rvizconfig)"/> -->
+    <include file="$(find msd700_launch)/launch/rviz_launch.launch">
+      <arg name="rviz_config" value="$(arg rviz_config)"/>
+    </include>
   </group>
 
 </launch>

@@ -1,5 +1,7 @@
 <launch>
     <arg name="open_rviz" default="false"/>
+    <arg name="rviz_config" value="$(find msd700_visual)/rviz/rplidar.rviz"/>
+    
     <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
         <param name="serial_port"         type="string" value="/dev/rplidar"/>
         <param name="serial_baudrate"     type="int"    value="115200"/>
@@ -8,11 +10,9 @@
         <param name="angle_compensate"    type="bool"   value="true"/>
     </node>
 
-    <group if="$(arg open_rviz)">
-        <include file="$(find msd700_visual)/launch/rviz.launch">
-        <param name="rvizconfig" command="$(arg rviz_config)"/>
-        <!-- <param name="rvizconfig" value="$(arg rviz_config)"/> -->
-        <!-- <param name="rvizconfig" default="$(arg rviz_config)"/> -->
+    <group if="$(arg open_rviz)"> 
+        <include file="$(find msd700_launch)/launch/rviz_launch.launch">
+          <arg name="rviz_config" value="$(arg rviz_config)"/>
+        </include>
     </group>
-    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find msd700_navigation)/rviz/rplidar.rviz" /> -->
 </launch>

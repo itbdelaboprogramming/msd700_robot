@@ -1,0 +1,14 @@
+{
+    "python.autoComplete.extraPaths": [
+        "/home/dimas_ridhwana/dagozilla_ws/devel/lib/python3/dist-packages",
+        "/home/dimas_ridhwana/myrobot_ws/devel/lib/python3/dist-packages",
+        "/home/dimas_ridhwana/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/dimas_ridhwana/dagozilla_ws/devel/lib/python3/dist-packages",
+        "/home/dimas_ridhwana/myrobot_ws/devel/lib/python3/dist-packages",
+        "/home/dimas_ridhwana/catkin_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages"
+    ]
+}
