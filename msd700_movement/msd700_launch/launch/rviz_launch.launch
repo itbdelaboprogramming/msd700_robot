@@ -3,7 +3,6 @@
     <arg name="rviz_config" />
 
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
-    <!-- <param name="rvizconf" value/> -->
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config)" required="true" />
 </launch>

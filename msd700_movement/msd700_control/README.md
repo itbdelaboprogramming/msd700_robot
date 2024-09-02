@@ -15,14 +15,14 @@ contact person : dimsridhwana@gmail.com
 ## Description
 This package contains every node needed to control the robot. 
 
-##Building package
+## Building package
 
 robot_localization pkg
 --------
 
 A robot localization stack developed by ITB de Labo for Nakayama Iron Works's MSD700 product to fuse some localization sensors using [robot_localization](https://docs.ros.org/en/noetic/api/robot_localization/html/index.html) package from ROS.
 
-### Launch file
+### (need revision) Launch file
 This stack contains several launch files as follows:
 * `imu_filter.launch` : this launch file corrects the IMU measurement by accounting for the earth's magnetic field and the robot's tilt [[1]]. This uses the "imu_filter_madgwick" node from the "imu_tools" package and the "hardware_state.py" node.
 [1]: http://wiki.ros.org/imu_tools
@@ -43,4 +43,32 @@ rosrun rviz rviz -d ~/catkin_ws/src/msd_pose_estimation/rviz/pose_estimation.rvi
 
 cmd_vel conversion
 -------- 
+
+
+
+## Launch Files
+
+### `robot_localization.launch`
+General     : Run all required component to run connect the Arduino from robot with ROS
+Detailed    :     
+
+#### Available Params   
+    - use_teleop    : 
+        boolean type param (true/false)
+        add `use_teleop:=true` to enable moving robot using keyboard
+        default -> false
+
+    - open_rviz     : 
+        boolean type param (true/false)
+        add `open_rviz:=true` to open the robot visualization using rviz
+
+
+#### How to run:
+    1. Make sure all msd700 prototype environment is alread set
+    2. use this command to launch the program
+        `roslaunch msd700_control robot_localization.launch`
+
+
+
+
 
