@@ -4,7 +4,7 @@
     <arg name="use_simulator"   default="false"/>
     <arg name="slam_methods"    default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
     <arg name="model"           default="$(find msd_pose_estimation)/urdf/irbot.urdf.xacro"/>
-    <arg name="rvizconfig"      default="$(find msd_pose_estimation)/rviz/pose_estimation.rviz" />
+    <arg name="rviz_config"     value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
     
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
     

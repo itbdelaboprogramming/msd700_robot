@@ -1,30 +1,29 @@
 <launch>
-  <arg name="use_teleop" default="false"/>
-  <arg name="open_rviz" default="false"/>
-  <arg name="rviz_config" value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
+    <arg name="use_teleop" default="false"/>
+    <arg name="open_rviz" default="false"/>
+    <arg name="rviz_config" value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
 
-  <include file="$(find msd700_launch)/launch/robot_description.launch"/> 
-  <include file="$(find msd700_launch)/launch/serial_launch.launch"/>  
-  <include file="$(find msd700_control)/launch/imu_filter.launch" />
+    <include file="$(find msd700_launch)/launch/robot_description.launch"/> 
+    <include file="$(find msd700_launch)/launch/serial_launch.launch"/>  
+    <include file="$(find msd700_control)/launch/imu_filter.launch" />
 
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
-    <rosparam command="load" file="$(find msd700_control)/config/ekf_localization_config.yaml" />
-    <remap from="/odometry/filtered" to="/odometry/filtered" />
-  </node>
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
+        <rosparam command="load" file="$(find msd700_control)/config/ekf_localization_config.yaml" />
+        <remap from="/odometry/filtered" to="/odometry/filtered" />
+    </node>
 
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="50.0"/>
-    <param name="tf_prefix" value=""/>
-  </node>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="publish_frequency" type="double" value="50.0"/>
+        <param name="tf_prefix" value=""/>
+    </node>
 
-  <group if="$(arg use_teleop)"> 
-    <include file="$(find msd700_launch)/launch/teleop.launch" />
-  </group>
+    <group if="$(arg use_teleop)"> 
+        <include file="$(find msd700_launch)/launch/teleop.launch" />
+    </group>
 
-  <group if="$(arg open_rviz)"> 
-    <include file="$(find msd700_launch)/launch/rviz_launch.launch">
-      <arg name="rviz_config" value="$(arg rviz_config)"/>
-    </include>
-  </group>
-
+    <group if="$(arg open_rviz)"> 
+        <include file="$(find msd700_launch)/launch/rviz_launch.launch">
+        <arg name="rviz_config" value="$(arg rviz_config)"/>
+        </include>
+    </group>
 </launch>
