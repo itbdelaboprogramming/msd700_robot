@@ -9,7 +9,7 @@
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
     
     <group if="$(arg open_rviz)"> 
-        <include file="$(find msd700_launch)/launch/rviz_launch.launch">
+        <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
             <arg name="rviz_config" value="$(arg rviz_config)"/>
         </include>
     </group>

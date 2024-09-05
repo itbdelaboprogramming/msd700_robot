@@ -8,7 +8,7 @@ ROS message and service definition package for MSD700 robot.
 2. Follow these commands
 ```bash
 cd ~/catkin_ws/src
-git clone https://github.com/itbdelaboprogramming/ros_msd700_msgs.git
+git clone https://github.com/itbdelaboprogramming/msd700_robot/msd700_movement/msd700_msg.git
 cd ~/catkin_ws
 catkin_make
 ```

@@ -19,7 +19,7 @@
         "/home/dimas_ridhwana/myrobot_ws/src/learn_rosserial_pkg/include/**",
         "/home/dimas_ridhwana/myrobot_ws/src/learn_simulation_pkg/include/**",
         "/home/dimas_ridhwana/myrobot_ws/src/learn_urdf_pkg/include/**",
-        "/home/dimas_ridhwana/catkin_ws/src/msd700_robot/msd700_launch/include/**",
+        "/home/dimas_ridhwana/catkin_ws/src/msd700_robot/msd700_bringup/include/**",
         "/home/dimas_ridhwana/catkin_ws/src/msd700_robot/msd700_mapping/include/**",
         "/home/dimas_ridhwana/catkin_ws/src/SLAM_ITBdeLabo/msd700_navigation/include/**",
         "/home/dimas_ridhwana/catkin_ws/src/msd700_robot/msd700_navigations/include/**",

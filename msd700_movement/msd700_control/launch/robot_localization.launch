@@ -3,8 +3,8 @@
     <arg name="open_rviz" default="false"/>
     <arg name="rviz_config" value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
 
-    <include file="$(find msd700_launch)/launch/robot_description.launch"/> 
-    <include file="$(find msd700_launch)/launch/serial_launch.launch"/>  
+    <include file="$(find msd700_visual)/launch/robot_description.launch.xml"/> 
+    <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>  
     <include file="$(find msd700_control)/launch/imu_filter.launch" />
 
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
@@ -18,12 +18,12 @@
     </node>
 
     <group if="$(arg use_teleop)"> 
-        <include file="$(find msd700_launch)/launch/teleop.launch" />
+        <include file="$(find msd700_bringup)/launch/teleop.launch" />
     </group>
 
     <group if="$(arg open_rviz)"> 
-        <include file="$(find msd700_launch)/launch/rviz_launch.launch">
-        <arg name="rviz_config" value="$(arg rviz_config)"/>
+        <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
+            <arg name="rviz_config" value="$(arg rviz_config)"/>
         </include>
     </group>
 </launch>

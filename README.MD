@@ -7,7 +7,7 @@ The main task for this robot is creating a map for featureless tunnel autonomous
 
 This repo organized in form of ROS1 stack which consist multiple package connecting to one another. 
 The packages are listed the following:
-    - msd700_launch             : Consist the user-end launch file to execute robot tasks
+    - msd700_bringup            : Consist the user-end launch file to execute robot tasks
     - msd700_msg                : Consist all of the robot messages
     - msd700_control            : two main task (convert from cmd_vel to harware_command and integration of robot sensors)
     - msd700_mapping            : Contains multiple SLAM localization algorithm and the automapping

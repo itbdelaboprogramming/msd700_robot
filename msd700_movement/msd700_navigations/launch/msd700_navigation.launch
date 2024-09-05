@@ -1,32 +1,32 @@
 <launch>
-  <!-- Arguments -->
-  <arg name="open_rviz"         default="true"/>
-  <arg name="move_forward_only" default="false"/>
-  <arg name="map_file"          default="$(find msd700_navigations)/maps/fluid_lab.yaml"/>
-  <arg name="slam_methods"      default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
-  <arg name="rviz_config"       value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
+    <!-- Arguments -->
+    <arg name="open_rviz"         default="true"/>
+    <arg name="move_forward_only" default="false"/>
+    <arg name="map_file"          default="$(find msd700_navigations)/maps/fluid_lab.yaml"/>
+    <arg name="slam_methods"      default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+    <arg name="rviz_config"       value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
 
-  <!-- Map server -->
-  <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+    <!-- Map server -->
+    <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
 
-  <!-- AMCL -->
-  <include file="$(find msd700_navigations)/launch/algorithm/amcl.launch"/>
+    <!-- AMCL -->
+    <include file="$(find msd700_navigations)/launch/algorithm/amcl.launch"/>
 
-  <!-- move_base -->
-  <include file="$(find msd700_launch)/launch/move_base.launch">
-    <arg name="move_forward_only" value="$(arg move_forward_only)"/>
-  </include>
-
-  <!-- rviz -->
-  <group if="$(arg open_rviz)"> 
-    <include file="$(find msd700_launch)/launch/rviz_launch.launch">
-      <arg name="rviz_config" value="$(arg rviz_config)"/>
+    <!-- move_base -->
+    <include file="$(find msd700_navigations)/launch/algorithm/move_base.launch">
+        <arg name="move_forward_only" value="$(arg move_forward_only)"/>
     </include>
-  </group>
 
-  <!-- other files -->
-  <include file="$(find msd700_launch)/launch/bridger.launch"/>
-  <include file="$(find msd700_launch)/launch/lidar_scanner.launch"/>
-  <include file="$(find msd700_control)/launch/robot_localization.launch"/>
+    <!-- rviz -->
+    <group if="$(arg open_rviz)"> 
+        <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
+            <arg name="rviz_config" value="$(arg rviz_config)"/>
+        </include>
+    </group>
+
+    <!-- other files -->
+    <include file="$(find msd700_bringup)/launch/bridger.launch"/>
+    <include file="$(find msd700_bringup)/launch/lidar_scanner.launch"/>
+    <include file="$(find msd700_control)/launch/robot_localization.launch"/>
   
 </launch>

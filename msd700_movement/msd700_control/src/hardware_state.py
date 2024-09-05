@@ -3,7 +3,7 @@
 # Import Python Libraries
 import rospy
 import tf
-from ros_msd700_msgs.msg import HardwareState
+from msd700_msg.msg import HardwareState
 from sensor_msgs.msg import Imu, MagneticField
 from geometry_msgs.msg import Point, Quaternion, Vector3
 from nav_msgs.msg import Odometry
@@ -13,14 +13,14 @@ import numpy as np
 rospy.init_node('raw_sensor_node')
 
 # Get ROS Parameters (loaded from pose_config.yaml)
-compute_period = rospy.get_param("/raw_sensor/compute_period", 10)
-max_speed_linear = rospy.get_param("/raw_sensor/max_speed_linear", 0.33)
-max_speed_angular = rospy.get_param("/raw_sensor/max_speed_angular", 1.75)
-wheel_radius = rospy.get_param("/raw_sensor/wheel_radius", 2.75)	  # in cm
-wheel_distance = rospy.get_param("/raw_sensor/wheel_distance", 23.0)    # in cm
-gear_ratio = rospy.get_param("/raw_sensor/gear_ratio", 1980.0)
-use_imu = rospy.get_param("/raw_sensor/use_imu", 1)
-az_offset = rospy.get_param("/raw_sensor/az_offset", 0.31)
+compute_period      = rospy.get_param("/raw_sensor/compute_period", 10)
+max_speed_linear    = rospy.get_param("/raw_sensor/max_speed_linear", 0.33)
+max_speed_angular   = rospy.get_param("/raw_sensor/max_speed_angular", 1.75)
+wheel_radius        = rospy.get_param("/raw_sensor/wheel_radius", 2.75)	        # in cm
+wheel_distance      = rospy.get_param("/raw_sensor/wheel_distance", 23.0)       # in cm
+gear_ratio          = rospy.get_param("/raw_sensor/gear_ratio", 1980.0)
+use_imu             = rospy.get_param("/raw_sensor/use_imu", 1)
+az_offset           = rospy.get_param("/raw_sensor/az_offset", 0.31)
 
 # Global Variables
 sub_count = 0
@@ -55,10 +55,10 @@ frequency = (1/compute_period) * 1000
 rate = rospy.Rate(frequency)
 
 # Create ROS Publishers
-odom_pub = rospy.Publisher('wheel/odom', Odometry, queue_size=1)
-imu_raw_pub = rospy.Publisher('imu/data_raw', Imu, queue_size=1)
-mag_pub = rospy.Publisher('imu/mag', MagneticField, queue_size=1)
-imu_pub = rospy.Publisher('imu/data', Imu, queue_size=1)
+odom_pub        = rospy.Publisher('wheel/odom', Odometry, queue_size=1)
+imu_raw_pub     = rospy.Publisher('imu/data_raw', Imu, queue_size=1)
+mag_pub         = rospy.Publisher('imu/mag', MagneticField, queue_size=1)
+imu_pub         = rospy.Publisher('imu/data', Imu, queue_size=1)
 
 # Utility Function
 def constrain(val, min_val, max_val):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 import rospy  
-from ros_msd700_msgs.msg import HardwareCommand
+from msd700_msg.msg import HardwareCommand
 import getch
 
 
