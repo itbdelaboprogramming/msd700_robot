@@ -3,7 +3,7 @@
     <arg name="open_rviz" default="false"/>
     <arg name="rviz_config" value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
 
-    <include file="$(find msd700_visual)/launch/robot_description.launch.xml"/> 
+    <include file="$(find msd700_visual)/include/robot_description.launch.xml"/> 
     <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>  
     <include file="$(find msd700_control)/launch/imu_filter.launch" />
 

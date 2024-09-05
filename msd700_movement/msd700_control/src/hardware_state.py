@@ -89,12 +89,12 @@ def hardware_state_callback(msg: HardwareState):
     global right_motor_pulse_delta, left_motor_pulse_delta, roll, pitch, yaw, acc_x, acc_y, acc_z, \
     gyr_x, gyr_y, gyr_z, mag_x, mag_y, mag_z, az_offset, sub_count, accum_yaw, curr_yaw, last_yaw, delta_yaw
     right_motor_pulse_delta = msg.right_motor_pulse_delta
-    left_motor_pulse_delta = msg.left_motor_pulse_delta
-    roll, pitch, yaw = np.radians(msg.roll), np.radians(msg.pitch), -warpAngle(np.radians(msg.heading)+np.pi/2)
-    acc_x, acc_y, acc_z = msg.acc_x, msg.acc_y, msg.acc_z+az_offset
-    gyr_x, gyr_y, gyr_z = np.radians(msg.gyr_y), np.radians(msg.gyr_x), np.radians(msg.gyr_z)
-    mag_x, mag_y, mag_z = msg.mag_x/1000000.0, msg.mag_y/1000000.0, msg.mag_z/1000000.0
-    sub_count       += 1
+    left_motor_pulse_delta  = msg.left_motor_pulse_delta
+    roll, pitch, yaw        = np.radians(msg.roll), np.radians(msg.pitch), -warpAngle(np.radians(msg.heading)+np.pi/2)
+    acc_x, acc_y, acc_z     = msg.acc_x, msg.acc_y, msg.acc_z+az_offset
+    gyr_x, gyr_y, gyr_z     = np.radians(msg.gyr_y), np.radians(msg.gyr_x), np.radians(msg.gyr_z)
+    mag_x, mag_y, mag_z     = msg.mag_x/1000000.0, msg.mag_y/1000000.0, msg.mag_z/1000000.0
+    sub_count += 1
     # Calculate delta yaw
     if sub_count <= 1:
         last_yaw    = yaw
