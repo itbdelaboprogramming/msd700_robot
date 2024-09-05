@@ -4,17 +4,20 @@
     <arg name="use_simulator"   default="false"/>
     <arg name="slam_methods"    default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
     <arg name="model"           default="$(find msd700_visual)/urdf/irbot.urdf.xacro"/>
-    <arg name="rviz_config"     value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
-    
-    <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
-    
+    <arg name="rviz_config"     value="$(find msd700_visual)/rviz/msd700_navigation.rviz"/>
+
     <group if="$(arg open_rviz)"> 
         <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
             <arg name="rviz_config" value="$(arg rviz_config)"/>
         </include>
     </group>
+
+    <group if="$(arg use_simulator)"> 
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro" />    
+    </group>    
     
     <group unless="$(arg use_simulator)"> 
+        <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
         <include file="$(find msd700_bringup)/launch/lidar_scanner.launch"/>   
         <include file="$(find msd700_control)/launch/robot_localization.launch"/>
     </group>
