@@ -1,5 +1,4 @@
 <launch>
-  <arg name="model"         default="$(find msd700_visual)/urdf/irbot.urdf.xacro"/>
-  <arg name="urdf_file"     default="$(find xacro)/xacro --inorder $(arg model)"/>
-  <param name="robot_description" command="$(arg urdf_file)" /> 
+  <arg name="model"     default="$(find xacro)/xacro --inorder $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
+  <param name="robot_description" command="$(arg model)" /> 
 </launch>

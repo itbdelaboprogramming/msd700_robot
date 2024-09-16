@@ -90,7 +90,18 @@ imu_pub         = rospy.Publisher('imu/data', Imu, queue_size=1)
 
 
 
+hierarchy
+Top
+    ---
+    msd700_navigation.launch
+        robot_localization.launch
 
+
+    msd700_explore.launch
+        msd700_slam
+
+    ---
+Bottom
 
 
 

@@ -15,3 +15,15 @@ slam_methods
 
 
 
+
+
+msd700_control
+
+yaml diganti
+
+
+
+
+step-by-step
+1. roslaunch msd700_simulation msd700_world.launch
+2. 

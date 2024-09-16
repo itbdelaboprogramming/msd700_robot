@@ -1,17 +1,29 @@
 <launch>
-    <arg name="use_teleop" default="false"/>
-    <arg name="open_rviz" default="false"/>
-    <arg name="rviz_config" value="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
+    <arg name="use_teleop"      default="false"/>
+    <arg name="use_simulator"   default="false"/>
+    <arg name="open_rviz"       default="false"/>
+    <arg name="rviz_config"     default="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
+    <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
 
-    <include file="$(find msd700_visual)/include/robot_description.launch.xml"/> 
-    <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>  
-    <include file="$(find msd700_control)/launch/imu_filter.launch" />
-
+    <arg name="odom_topic"      default="/wheel/odom" />   
+    <arg name="imu_topic"       default="/imu/data" />    
+    
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
-        <rosparam command="load" file="$(find msd700_control)/config/ekf_localization_config.yaml" />
-        <remap from="/odometry/filtered" to="/odometry/filtered" />
+        <rosparam command="load"            file="$(find msd700_control)/config/ekf_localization_config.yaml" />
+        <param name="odom0"                 value="$(arg odom_topic)"/>
+        <param name="imu0"                  value="$(arg imu_topic)"/>
+        <remap from="/odometry/filtered"    to="/odometry/filtered" />
+        <remap from="/wheel/odom"           to="$(arg odom_topic)"/>
     </node>
 
+    <group if="$(arg use_simulator)">
+        <include    file="$(find msd700_simulation)/launch/msd700_world.launch"/>
+    </group>
+
+    <group unless="$(arg use_simulator)">
+        <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>           
+        <include file="$(find msd700_control)/launch/imu_filter.launch" />     
+    </group>
 
     <group if="$(arg use_teleop)"> 
         <include file="$(find msd700_bringup)/launch/teleop.launch" />
@@ -19,7 +31,19 @@
 
     <group if="$(arg open_rviz)"> 
         <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
-            <arg name="rviz_config" value="$(arg rviz_config)"/>
+            <arg name="rviz_config"     value="$(arg rviz_config)"/>
+            <arg name="model"           value="$(arg model)"/>
         </include>
     </group>
 </launch>
+
+
+<!-- 
+    use this to launch this file
+
+    roslaunch msd700_control robot_localization.launch 
+    odom_topic:= ????? (Required)
+    use_teleop:= ????? 
+    use_simulator:= ?????
+    
+-->
