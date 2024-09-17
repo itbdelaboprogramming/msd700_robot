@@ -1,9 +1,12 @@
 <launch>
     <!-- Arguments -->
-    <arg name="move_forward_only"   default="false"/>
+    <arg name="move_forward_only"   default="true"/>
     <arg name="use_simulator"       default="false"/>
     <arg name="open_rviz"           default="true"/>
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_navigation.rviz"/>
+
+    <arg name="odom_topic"      default="/wheel/odom" />   
+    <arg name="imu_topic"       default="/imu/data" />    
 
     <group unless="$(arg use_simulator)"> 
         <include file="$(find msd700_bringup)/launch/bridger.launch"/>
@@ -17,6 +20,8 @@
         <arg name="open_rviz"       value="$(arg open_rviz)"/>
         <arg name="use_simulator"   value="$(arg use_simulator)"/>
         <arg name="rviz_config"     value="$(arg rviz_config)"/>
+        <arg name="odom_topic"      value="/wheel/odom" />   
+        <arg name="imu_topic"       value="/imu/data" /> 
     </include>
     
     <!-- move_base -->
