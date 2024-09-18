@@ -9,10 +9,12 @@ project(msd700_navigations)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
+  std_msgs
   nav_msgs
   roscpp
   rospy
   tf2
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
