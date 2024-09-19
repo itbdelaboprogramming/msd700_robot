@@ -39,7 +39,7 @@ def get_keypressed():
         # Check each defined key and update key_pressed if any is pressed
         # The velocity is in m/s
         if keys[py.K_w]:
-            linear_x    = 0.5
+            linear_x    = 0.345
             linear_y    = 0
             linear_z    = 0
             angular_x   = 0
@@ -47,7 +47,7 @@ def get_keypressed():
             angular_z   = 0
             
         elif keys[py.K_s]:
-            linear_x    = -0.5
+            linear_x    = -0.345
             linear_y    = 0
             linear_z    = 0
             angular_x   = 0
@@ -60,7 +60,7 @@ def get_keypressed():
             linear_z    = 0
             angular_x   = 0
             angular_y   = 0
-            angular_z   = -2.0
+            angular_z   = -0.5
             
         elif keys[py.K_a]:
             linear_x    = 0
@@ -68,7 +68,7 @@ def get_keypressed():
             linear_z    = 0
             angular_x   = 0
             angular_y   = 0
-            angular_z   = 2.0
+            angular_z   = 0.5
             
         else:
             linear_x    = 0
@@ -91,23 +91,6 @@ def get_keypressed():
         rate.sleep()
 
 
-def setup_publisher():
-    
-    rospy.init_node('im_a_controller', anonymous=True)
-    teleop_pub = rospy.Publisher('hardware_command', Twist, queue_size=1)
-    teleop_msg = Twist()
-    rate = rospy.Rate(1000)
-    
-    while not rospy.is_shutdown():  
-        teleop_msg.linear.x     = linear_x
-        teleop_msg.linear.y     = linear_y
-        teleop_msg.linear.z     = linear_z
-        teleop_msg.angular.x    = angular_x
-        teleop_msg.angular.y    = angular_y
-        teleop_msg.angular.z    = angular_z
-
-        teleop_pub.publish(teleop_msg)
-        rate.sleep()
 
 
 if __name__ == '__main__':

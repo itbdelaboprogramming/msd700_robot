@@ -33,23 +33,23 @@ def get_keypressed():
 
         # Check each defined key and update key_pressed if any is pressed
         if keys[py.K_a]:
-            right_motor_speed   = 100    
-            left_motor_speed    = -100
+            right_motor_speed   = 180    
+            left_motor_speed    = -180
             # print("W")
             key_pressed = py.K_a
         elif keys[py.K_s]:
-            right_motor_speed   = -100    
-            left_motor_speed    = -100
+            right_motor_speed   = -180    
+            left_motor_speed    = -180
             # print("A")
             key_pressed = py.K_s
         elif keys[py.K_d]:
-            right_motor_speed   = -100    
-            left_motor_speed    = 100
+            right_motor_speed   = -180    
+            left_motor_speed    = 180
             # print("S")
             key_pressed = py.K_d
         elif keys[py.K_w]:
-            right_motor_speed   = 100    
-            left_motor_speed    = 100
+            right_motor_speed   = 180    
+            left_motor_speed    = 180
             # print("D")
             key_pressed = py.K_w
         else:

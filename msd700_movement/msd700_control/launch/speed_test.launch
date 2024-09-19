@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>   
+    <include file="$(find msd700_bringup)/launch/teleop.launch" />
+    <include file="$(find msd700_bringup)/launch/bridger.launch" />
+
+    <node pkg="msd700_control" type="calculate.py" name="calculate" output="screen"/>
+</launch>
