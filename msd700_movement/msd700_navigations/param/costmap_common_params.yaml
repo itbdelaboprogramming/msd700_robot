@@ -1,9 +1,10 @@
 obstacle_range: 1
 raytrace_range: 1.5
 
-#footprint: [[-0.6, -0.425], [0.6, -0.425], [0.6,0.425], [-0.6,0.425]]            # ITBdelabo MSD700 Using extended hand
+footprint: [[-0.30, -0.20], [0.30, -0.20], [0.30,0.20], [-0.30,0.20]]                 # ITBdelabo MSD700 new design
+# footprint: [[-0.6, -0.425], [0.6, -0.425], [0.6,0.425], [-0.6,0.425]]           # ITBdelabo MSD700 Using extended hand
 # footprint: [[-0.275, -0.20], [0.275, -0.20], [0.275,0.20], [-0.275,0.20]]       # ITBdelabo MSD700 Without extended hand
-footprint: [[-0.105, -0.105], [-0.105, 0.105], [0.041, 0.105], [0.041, -0.105]]   # turtlebot3
+# footprint: [[-0.105, -0.105], [-0.105, 0.105], [0.041, 0.105], [0.041, -0.105]]   # turtlebot3
 # footprint: [[-0.275, -0.18], [0.275, -0.18], [0.275,0.18], [-0.275,0.18]]
 #robot_radius: 0.105
 

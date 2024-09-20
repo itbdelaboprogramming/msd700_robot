@@ -27,7 +27,7 @@ rospy.init_node('bridger')
 
 # Get parameters
 wheel_radius        = rospy.get_param("/raw_sensor/wheel_radius", 2.75)	       
-wheel_distance      = rospy.get_param("/raw_sensor/wheel_distance", 23.0)       
+wheel_distance      = rospy.get_param("/raw_sensor/wheel_distance", 100.0)       
 gear_ratio          = rospy.get_param("/raw_sensor/gear_ratio", 1980.0)
 
 
@@ -52,7 +52,7 @@ target_right = 0.0
 # rotation_factor = 10    # add more speed
 
 mul_factor = 1              # add more speed
-rotation_factor = 1         # add more speed
+rotation_factor = 2         # add more speed
 
 # Main loop Setup
 rate = rospy.Rate(100)
@@ -92,8 +92,8 @@ def convert_rpm():
 
     wheel_circumference = 2*np.pi*wheel_radius
 
-    target_left_mps    = vx-wz*wheel_distance/(2*100)    # in meter per second (mps)
-    target_right_mps   = vx+wz*wheel_distance/(2*100)    # in meter per second (mps)
+    target_left_mps    = vx-wz*wheel_distance/(2*100) * rotation_factor     # in meter per second (mps)
+    target_right_mps   = vx+wz*wheel_distance/(2*100) * rotation_factor     # in meter per second (mps)
 
     target_left_rpm    = 60*(target_left_mps/(wheel_circumference/100))    # in rotation per meter (rpm)
     target_right_rpm   = 60*(target_right_mps/(wheel_circumference/100))    # in rotation per meter (rpm)
