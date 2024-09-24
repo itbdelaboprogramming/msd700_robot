@@ -3,8 +3,8 @@
     <arg name="open_rviz"       default="false"/>
     <arg name="use_simulator"   default="false"/>
     <arg name="slam_methods"    default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
-    <arg name="model"           default="$(find xacro)/xacro   $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro"/>
-    <!-- <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/> -->
+    <!-- <arg name="model"           default="$(find xacro)/xacro   $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro"/> -->
+    <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_navigation.rviz"/>
     <arg name="odom_topic"      default="/wheel/odom" />   
     <arg name="imu_topic"       default="/imu/data" />    
