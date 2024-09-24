@@ -36,6 +36,8 @@ try:
             right_speed     = calculate_speed(right_motor_pulse_delta, delta_t)
             left_speed      = calculate_speed(left_motor_pulse_delta, delta_t)
             
+            
+
             rospy.loginfo(f"Right wheel speed: {right_speed:.3f} m/s, Left wheel speed: {left_speed:.3f} m/s")
             
             # Update t0 to the latest time t1
