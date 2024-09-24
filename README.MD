@@ -50,7 +50,7 @@ If you're using robot other than ITBdeLabo's msd700 prototype, add this argument
 
 
 
-Use this as reference
+Use this example as reference
 ```
 roslaunch msd700_navigations msd700_navigation.launch 
     open_rviz:=true 
