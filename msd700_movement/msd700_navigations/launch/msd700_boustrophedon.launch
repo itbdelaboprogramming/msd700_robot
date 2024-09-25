@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="open_rviz"           default="true"/>
-    <arg name="use_simulator"       default="true"/>
-    <arg name="map_file"            default="$(find msd700_navigations)/maps/turtlebot_house.yaml"/>
+    <arg name="use_simulator"       default="false"/>
+    <arg name="map_file"            default="$(find msd700_navigations)/maps/ppti.yaml"/>
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_boustrophedon.rviz"/>
-    <arg name="model"               default="$(find xacro)/xacro   $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro"/>
+    <arg name="model"               default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="odom_topic"      default="/wheel/odom" />   
     <arg name="imu_topic"       default="/imu/data" />  
 
@@ -16,6 +16,7 @@
         <arg name="open_rviz"       value="$(arg open_rviz)"/>
         <arg name="rviz_config"     value="$(arg rviz_config)"/>
         <arg name="model"           value="$(arg model)"/>
+        <arg name="map_file"           value="$(arg map_file)"/>
         <arg name="odom_topic"      value="/wheel/odom" />   
         <arg name="imu_topic"       value="/imu/data" /> 
     </include>
