@@ -48,11 +48,13 @@ Here are more detail information for msd700_movement package
 
 
 ### Teleop (Tele operating) robot 
+   Use this to launch the Teleop
     ```
     roslaunch msd700_bringup teleop.launch
     ```
 
 ### Manual Mapping 
+   Use this to launch the manual mapping
     ```
     roslaunch msd700_navigations msd700_slam.launch open_rviz:=true
     ```
@@ -64,6 +66,7 @@ after finish creating the map, run this command on the command prompt
     ```
 
 ### Autonomous Exploration and Mapping
+   Use this to launch the autonomous mapping
     ```
     roslaunch msd700_navigations msd700_explore.launch 
     ```
@@ -75,6 +78,7 @@ after finish creating the map, run this command on the command prompt
     ```
 
 ### Autonomous Navigation
+   Use this to launch the autonomous navigation
     ```
     roslaunch msd700_navigations msd700_navigation.launch 
     ```
