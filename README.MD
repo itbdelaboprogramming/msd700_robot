@@ -7,7 +7,7 @@ The main task for this robot is to create a map for a featureless tunnel autonom
 
 This repo is organized in the form of ROS1 stack, which consists of multiple packages connecting to one another. 
 The packages are listed the following:
-* msd700_movement                &nbsp;&nbsp;&nbsp;&nbsp; : Consist all movement functionalities, such as sensor fusion, navigation, and exploration
+* msd700_movement                : Consist all movement functionalities, such as sensor fusion, navigation, and exploration
 * msd700_simulation (package)    : Consist files necessary for simulation purposes, the simuation runs in Gazebo using turtlebot env
 * msd700_visual (package)        : Consist robot visual for gazebo or rviz use
 
@@ -59,7 +59,7 @@ Here are more detail information for msd700_movement package
 
     ```
 
-    after finish creating the map, run this command on the command prompt
+ after finish creating the map, run this command on the command prompt
     ```
     // Change the {NAME_OF_FILE} as you wanted
     rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
@@ -71,7 +71,7 @@ Here are more detail information for msd700_movement package
 
     ```
 
-    after finish creating the map, run this command on the command prompt
+ after finish creating the map, run this command on the command prompt
     ```
     // Change the {NAME_OF_FILE} as you wanted
     rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
@@ -99,10 +99,11 @@ Here are more detail information for msd700_movement package
     ```
 
  Rviz will open, then follow this step,
- * Click Publish Points on top of the Rviz window
- * Give a closed environment where the robot needs to operate
-    
-
+    * Click Publish Points on top of the Rviz window
+    * Give a closed environment where the robot needs to operate
+      PICTURESSSSS
+    * The robot will automatically create a path to do boustrophedon movement 
+ 
 
 If you're using robot other than ITBdeLabo's msd700 prototype, add this arguments
 
@@ -116,7 +117,7 @@ If you're using robot other than ITBdeLabo's msd700 prototype, add this argument
 
 
 
-For detail explanation please refer to this "StepbyStep msd700" documents
+For detailed explanation please refer to this "StepbyStep msd700" documents
 https://docs.google.com/document/d/1TlEUj9Pil4I-Mka3oAh8PWbCwtbUBFhPY5Z3MNVvOw4/edit?usp=sharing
 
 
