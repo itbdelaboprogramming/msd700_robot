@@ -50,13 +50,11 @@ Here are more detail information for msd700_movement package
 ### Teleop (Tele operating) robot 
     ```
     roslaunch msd700_bringup teleop.launch
-
     ```
 
 ### Manual Mapping 
     ```
     roslaunch msd700_navigations msd700_slam.launch open_rviz:=true
-
     ```
 
 after finish creating the map, run this command on the command prompt
@@ -68,7 +66,6 @@ after finish creating the map, run this command on the command prompt
 ### Autonomous Exploration and Mapping
     ```
     roslaunch msd700_navigations msd700_explore.launch 
-
     ```
 
  after finish creating the map, run this command on the command prompt
@@ -80,7 +77,6 @@ after finish creating the map, run this command on the command prompt
 ### Autonomous Navigation
     ```
     roslaunch msd700_navigations msd700_navigation.launch 
-
     ```
     
  Rviz will open with a robot and a map (grey color with black representing walls), then follow this step,
@@ -95,7 +91,6 @@ after finish creating the map, run this command on the command prompt
 ### Boustrophedon Movement
     ```
     roslaunch msd700_navigations msd700_boustrophedon.launch 
-
     ```
 
  Rviz will open, then follow this step,
