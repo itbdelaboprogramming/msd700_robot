@@ -7,7 +7,7 @@ The main task for this robot is to create a map for a featureless tunnel autonom
 
 This repo is organized in the form of ROS1 stack, which consists of multiple packages connecting to one another. 
 The packages are listed the following:
-* msd700_movement                : Consist all movement functionalities, such as sensor fusion, navigation, and exploration
+* msd700_movement                &nbsp;&nbsp;&nbsp;&nbsp; : Consist all movement functionalities, such as sensor fusion, navigation, and exploration
 * msd700_simulation (package)    : Consist files necessary for simulation purposes, the simuation runs in Gazebo using turtlebot env
 * msd700_visual (package)        : Consist robot visual for gazebo or rviz use
 
