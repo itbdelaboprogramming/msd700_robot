@@ -83,13 +83,13 @@ Here are more detail information for msd700_movement package
 
     ```
     
-    Rviz will open with a robot and a map (grey color with black representing walls), then follow this step,
-    * Put the estimated location in the map using 2D Pose Estimate
-    * Rotate the robot 360 degree [manually](#terminology) until the map in Rviz [converge](#terminology)
-        PICTURESSSSS
-    * Navigate the goals using 2D Nav Goal by clicking and then dragging the arrow
-        PICTURESSSSS
-    * The robot will automatically create a path and move to the goal autonomously while avoiding obstacles
+ Rviz will open with a robot and a map (grey color with black representing walls), then follow this step,
+ * Put the estimated location in the map using 2D Pose Estimate
+ * Rotate the robot 360 degree [manually](#terminology) until the map in Rviz [converge](#terminology)
+     PICTURESSSSS
+ * Navigate the goals using 2D Nav Goal by clicking and then dragging the arrow
+     PICTURESSSSS
+ * The robot will automatically create a path and move to the goal autonomously while avoiding obstacles
 
 
 ### Boustrophedon Movement
@@ -98,9 +98,9 @@ Here are more detail information for msd700_movement package
 
     ```
 
-    Rviz will open, then follow this step,
-    * Click Publish Points on top of the Rviz window
-    * Give a closed environment where the robot needs to operate
+ Rviz will open, then follow this step,
+ * Click Publish Points on top of the Rviz window
+ * Give a closed environment where the robot needs to operate
     
 
 
