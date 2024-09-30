@@ -49,39 +49,39 @@ Here are more detail information for msd700_movement package
 
 ### Teleop (Tele operating) robot 
    Use this to launch the Teleop
-    ```
-    roslaunch msd700_bringup teleop.launch
-    ```
+   ```
+   roslaunch msd700_bringup teleop.launch
+   ```
 
 ### Manual Mapping 
    Use this to launch the manual mapping
-    ```
-    roslaunch msd700_navigations msd700_slam.launch open_rviz:=true
-    ```
+   ```
+   roslaunch msd700_navigations msd700_slam.launch open_rviz:=true
+   ```
 
 after finish creating the map, run this command on the command prompt
-    ```
-    // Change the {NAME_OF_FILE} as you wanted
-    rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
-    ```
+   ```
+   // Change the {NAME_OF_FILE} as you wanted
+   rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
+   ```
 
 ### Autonomous Exploration and Mapping
    Use this to launch the autonomous mapping
-    ```
-    roslaunch msd700_navigations msd700_explore.launch 
-    ```
+   ```
+   roslaunch msd700_navigations msd700_explore.launch 
+   ```
 
  after finish creating the map, run this command on the command prompt
-    ```
-    // Change the {NAME_OF_FILE} as you wanted
-    rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
-    ```
+   ```
+   // Change the {NAME_OF_FILE} as you wanted
+   rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
+   ```
 
 ### Autonomous Navigation
    Use this to launch the autonomous navigation
-    ```
-    roslaunch msd700_navigations msd700_navigation.launch 
-    ```
+   ```
+   roslaunch msd700_navigations msd700_navigation.launch 
+   ```
     
  Rviz will open with a robot and a map (grey color with black representing walls), then follow this step,
    * Put the estimated location in the map using 2D Pose Estimate
@@ -93,9 +93,9 @@ after finish creating the map, run this command on the command prompt
 
 
 ### Boustrophedon Movement
-    ```
-    roslaunch msd700_navigations msd700_boustrophedon.launch 
-    ```
+   ```
+   roslaunch msd700_navigations msd700_boustrophedon.launch 
+   ```
 
  Rviz will open, then follow this step,
    * Click Publish Points on top of the Rviz window
