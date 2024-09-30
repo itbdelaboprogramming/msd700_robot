@@ -59,7 +59,7 @@ Here are more detail information for msd700_movement package
 
     ```
 
- after finish creating the map, run this command on the command prompt
+after finish creating the map, run this command on the command prompt
     ```
     // Change the {NAME_OF_FILE} as you wanted
     rosrun map_server map_saver -f ~/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/maps/{NAME_OF_THE_FILE}.yaml
@@ -84,12 +84,12 @@ Here are more detail information for msd700_movement package
     ```
     
  Rviz will open with a robot and a map (grey color with black representing walls), then follow this step,
- * Put the estimated location in the map using 2D Pose Estimate
- * Rotate the robot 360 degree [manually](#terminology) until the map in Rviz [converge](#terminology)
+   * Put the estimated location in the map using 2D Pose Estimate
+   * Rotate the robot 360 degree [manually](#terminology) until the map in Rviz [converge](#terminology)
      PICTURESSSSS
- * Navigate the goals using 2D Nav Goal by clicking and then dragging the arrow
+   * Navigate the goals using 2D Nav Goal by clicking and then dragging the arrow
      PICTURESSSSS
- * The robot will automatically create a path and move to the goal autonomously while avoiding obstacles
+   * The robot will automatically create a path and move to the goal autonomously while avoiding obstacles
 
 
 ### Boustrophedon Movement
@@ -99,10 +99,10 @@ Here are more detail information for msd700_movement package
     ```
 
  Rviz will open, then follow this step,
-    * Click Publish Points on top of the Rviz window
-    * Give a closed environment where the robot needs to operate
+   * Click Publish Points on top of the Rviz window
+   * Give a closed environment where the robot needs to operate
       PICTURESSSSS
-    * The robot will automatically create a path to do boustrophedon movement 
+   * The robot will automatically create a path to do boustrophedon movement 
  
 
 If you're using robot other than ITBdeLabo's msd700 prototype, add this arguments
