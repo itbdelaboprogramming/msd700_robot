@@ -15,7 +15,10 @@
 
     <group unless="$(arg use_simulator)"> 
         <include    file="$(find msd700_bringup)/launch/bridger.launch"/>
-        <include    file="$(find msd700_bringup)/launch/lidar_scanner.launch"/>
+        <include    file="$(find msd700_bringup)/launch/lidar_scanner.launch"/>    
+        <include file="$(find msd700_navigations)/launch/algorithm/move_base.launch">
+            <arg name="move_forward_only" value="$(arg move_forward_only)"/>
+        </include>
     </group>
 
     <!-- Get the saved map -->
@@ -33,10 +36,9 @@
         <arg name="imu_topic"       value="/imu/data" /> 
     </include>
 
-    <include file="$(find msd700_navigations)/launch/algorithm/move_base.launch">
+    <include file="$(find msd700_navigations)/launch/algorithm/move_base_sim.launch">
         <arg name="move_forward_only" value="$(arg move_forward_only)"/>
     </include>
-
 </launch>
 
 
