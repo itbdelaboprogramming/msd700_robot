@@ -1,8 +1,4 @@
 <?xml version="1.0"?>
-<!-- 
-    Purpose     : Launch a boustrophedon movement
-    Last Update : 1 Oct by Dimas Ridhwana
- -->
 
 <launch>
     <arg name="move_forward_only"   default="false"/>
