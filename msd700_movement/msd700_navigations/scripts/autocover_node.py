@@ -9,62 +9,86 @@ import move_base_msgs.msg
 from copy import deepcopy
 from nav_msgs.msg import OccupancyGrid
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
-import math        
+import math
+
+def extract_occupied_positions(grid: OccupancyGrid):
+    resolution = grid.info.resolution
+    origin_x = grid.info.origin.position.x
+    origin_y = grid.info.origin.position.y
+    width = grid.info.width
+    height = grid.info.height
+
+    occupied_positions = []
+
+    # Loop through the occupancy grid data
+    for k, value in enumerate(grid.data):
+        if value == 100:  # Only consider occupied cells
+            # Convert 1D index `k` to 2D indices (i, j)
+            i = k // width
+            j = k % width
+
+            # Convert to real-world coordinates
+            x = origin_x + j * resolution
+            y = origin_y + i * resolution 
+
+            occupied_positions.append((x, y))
+
+    return occupied_positions
 
 def autocover_node():
     map_msg: OccupancyGrid = rospy.wait_for_message("/map", OccupancyGrid)
-    resolution = map_msg.info.resolution
 
-    # Map width and height (in number of cells)
-    width = map_msg.info.width
-    height = map_msg.info.height
+    occupied_positions = extract_occupied_positions(map_msg)
 
-    # Origin of the map (bottom-left corner)
-    origin_x = map_msg.info.origin.position.x
-    origin_y = map_msg.info.origin.position.y
+    plus_plus = [(x, y) for (x, y) in occupied_positions if x >= 0 and y >= 0]
+    plus_minus = [(x, y) for (x, y) in occupied_positions if x >= 0 and y < 0]
+    minus_plus = [(x, y) for (x, y) in occupied_positions if x < 0 and y >= 0]
+    minus_minus = [(x, y) for (x, y) in occupied_positions if x < 0 and y < 0]
 
-    rate = rospy.Rate(4) 
+    upper_left = max(plus_plus, key=lambda x: x[0] + x[1])
 
-    # Calculate the map boundaries
-    boundary_x_min = -3.0
-    boundary_y_min = -3.0
-    boundary_x_max = 3.0
-    boundary_y_max = 3.0
+    upper_right = max(plus_minus, key=lambda x: x[0] - x[1])
+
+    lower_left = max(minus_plus, key=lambda x: -x[0] + x[1])
+
+    lower_right = max(minus_minus, key=lambda x: -x[0] - x[1])
+
+    rate = rospy.Rate(4)
 
     points = []
     point = Point()
-    point.x = boundary_x_min
-    point.y = boundary_y_max
+    point.x = lower_left[0]
+    point.y = lower_left[1]
     point.z = 0.0
     points.append(deepcopy(point))
     
     point = Point()
-    point.x = boundary_x_min
-    point.y = boundary_y_max
+    point.x = lower_left[0]
+    point.y = lower_left[1]
     point.z = 0.0
     points.append(deepcopy(point))
 
     point = Point()
-    point.x = boundary_x_max
-    point.y = boundary_y_max
+    point.x = upper_left[0]
+    point.y = upper_left[1]
     point.z = 0.0
     points.append(deepcopy(point))
 
     point = Point()
-    point.x = boundary_x_max
-    point.y = boundary_y_min
+    point.x = upper_right[0]
+    point.y = upper_right[1]
     point.z = 0.0
     points.append(deepcopy(point))
 
     point = Point()
-    point.x = boundary_x_min
-    point.y = boundary_y_min
+    point.x = lower_right[0]
+    point.y = lower_right[1]
     point.z = 0.0
     points.append(deepcopy(point))
 
     point = Point()
-    point.x = boundary_x_min
-    point.y = boundary_y_max
+    point.x = lower_left[0]
+    point.y = lower_left[1]
     point.z = 0.0
     points.append(deepcopy(point))
 
