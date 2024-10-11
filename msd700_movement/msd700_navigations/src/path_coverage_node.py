@@ -140,14 +140,27 @@ class MapDrive(MarkerVisualization):
 			boustrophedon_script = os.path.join(self.rospack.get_path('msd700_navigations'), "src/boustrophedon_decomposition.rb")
 			with os.popen("%s %s" % (boustrophedon_script, ftmp.name)) as fscript:
 				polygons = json.loads(fscript.readline())
+		map_info: OccupancyGrid = rospy.wait_for_message("/map", OccupancyGrid)
 		for poly in polygons:
 			points = [
 					(
 					(point[0]+minx)*costmap.info.resolution+costmap.info.origin.position.x,
 					(point[1]+miny)*costmap.info.resolution+costmap.info.origin.position.y
 					) for point in poly]
-			rospy.logdebug("Creating polygon from Boustrophedon Decomposition %s" % (str(points)))
-			self.drive_polygon(Polygon(points))
+			# check if point is inside occupancy grid
+			valid = True
+			for point in points:
+				# Convert to map coordinate
+				x = int((point[0]-map_info.info.origin.position.x)/map_info.info.resolution)
+				y = int((point[1]-map_info.info.origin.position.y)/map_info.info.resolution)
+				idx = int(y*map_info.info.width+x)
+				if map_info.data[idx] == -1:
+					valid = False
+			if (not valid):
+				continue
+			else:
+				rospy.logdebug("Creating polygon from Boustrophedon Decomposition %s" % (str(points)))
+				self.drive_polygon(Polygon(points))
 		rospy.loginfo("Boustrophedon Decomposition done")
 
 	def next_pos(self, x, y, angle):

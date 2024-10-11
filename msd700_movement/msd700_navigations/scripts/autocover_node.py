@@ -40,18 +40,19 @@ def autocover_node():
 
     occupied_positions = extract_occupied_positions(map_msg)
 
-    plus_plus = [(x, y) for (x, y) in occupied_positions if x >= 0 and y >= 0]
-    plus_minus = [(x, y) for (x, y) in occupied_positions if x >= 0 and y < 0]
-    minus_plus = [(x, y) for (x, y) in occupied_positions if x < 0 and y >= 0]
-    minus_minus = [(x, y) for (x, y) in occupied_positions if x < 0 and y < 0]
+    min_x = min(occupied_positions, key=lambda x: x[0])[0]
+    max_x = max(occupied_positions, key=lambda x: x[0])[0]
+    min_y = min(occupied_positions, key=lambda x: x[1])[1]
+    max_y = max(occupied_positions, key=lambda x: x[1])[1]
+    max_all = max(abs(min_x), abs(max_x), abs(min_y), abs(max_y))
 
-    upper_left = max(plus_plus, key=lambda x: x[0] + x[1])
+    upper_left = (max_all, max_all)
 
-    upper_right = max(plus_minus, key=lambda x: x[0] - x[1])
+    upper_right = (max_all, -max_all)
 
-    lower_left = max(minus_plus, key=lambda x: -x[0] + x[1])
+    lower_left = (-max_all, max_all)
 
-    lower_right = max(minus_minus, key=lambda x: -x[0] - x[1])
+    lower_right = (-max_all, -max_all)
 
     rate = rospy.Rate(4)
 
