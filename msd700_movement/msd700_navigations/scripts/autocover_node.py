@@ -46,13 +46,16 @@ def autocover_node():
     max_y = max(occupied_positions, key=lambda x: x[1])[1]
     max_all = max(abs(min_x), abs(max_x), abs(min_y), abs(max_y))
 
-    upper_left = (max_all, max_all)
+    max_all_x = max_all if max_all < map_msg.info.width * map_msg.info.resolution else map_msg.info.width * map_msg.info.resolution
+    max_all_y = max_all if max_all < map_msg.info.height * map_msg.info.resolution else map_msg.info.height * map_msg.info.resolution
 
-    upper_right = (max_all, -max_all)
+    upper_left = (max_all_x, max_all_y)
 
-    lower_left = (-max_all, max_all)
+    upper_right = (max_all_x, -max_all_y)
 
-    lower_right = (-max_all, -max_all)
+    lower_left = (-max_all_x, max_all_y)
+
+    lower_right = (-max_all_x, -max_all_y)
 
     rate = rospy.Rate(4)
 
