@@ -46,16 +46,34 @@ def autocover_node():
     max_y = max(occupied_positions, key=lambda x: x[1])[1]
     max_all = max(abs(min_x), abs(max_x), abs(min_y), abs(max_y))
 
-    max_all_x = max_all if max_all < map_msg.info.width * map_msg.info.resolution else map_msg.info.width * map_msg.info.resolution
-    max_all_y = max_all if max_all < map_msg.info.height * map_msg.info.resolution else map_msg.info.height * map_msg.info.resolution
+    min_width_map = map_msg.info.origin.position.x
+    min_height_map = map_msg.info.origin.position.y
+    max_width_map = map_msg.info.origin.position.x + map_msg.info.width * map_msg.info.resolution
+    max_height_map = map_msg.info.origin.position.y + map_msg.info.height * map_msg.info.resolution
 
-    upper_left = (max_all_x, max_all_y)
+    upper_left = (max_all, max_all)
+    if (upper_left[0] > max_width_map):
+        upper_left[0] = max_width_map
+    if (upper_left[1] > max_height_map):
+        upper_left[1] = max_height_map
 
-    upper_right = (max_all_x, -max_all_y)
+    upper_right = (max_all, -max_all)
+    if (upper_right[0] > max_width_map):
+        upper_right[0] = max_width_map
+    if (upper_right[1] < min_height_map):
+        upper_right[1] = min_height_map
 
-    lower_left = (-max_all_x, max_all_y)
+    lower_left = (-max_all, max_all)
+    if (lower_left[0] < min_width_map):
+        lower_left[0] = min_width_map
+    if (lower_left[1] > max_height_map):
+        lower_left[1] = max_height_map
 
-    lower_right = (-max_all_x, -max_all_y)
+    lower_right = (-max_all, -max_all)
+    if (lower_right[0] < min_width_map):
+        lower_right[0] = min_width_map
+    if (lower_right[1] < min_height_map):
+        lower_right[1] = min_height_map
 
     rate = rospy.Rate(4)
 
