@@ -33,12 +33,14 @@ In "loop()":
  
 */
 #include <Wire.h>
+#include <PinChangeInterrupt.h>
 #include <ros.h>
 #include <msd700_msg/HardwareCommand.h>
 #include <msd700_msg/HardwareState.h>
 #include <Servo.h>
 #include <MPU6050.h>
 
+// Include the necessary library
 #include "Motor.h"
 #include "Encoder.h"
 #include "LPF.h"
@@ -93,7 +95,7 @@ In "loop()":
 #define BLUE_LED 31
 
 // SERVO
-#define CAM_SERVO 2
+#define CAM_SERVO 3
 #define MAX_SERVO_POS 175
 #define MIN_SERVO_POS 125
 #define INCREMENT_POS 10
@@ -215,6 +217,8 @@ void callbackLB(){LeftEncoder.doEncoderB();}
 byte current_channel = 1;
 uint16_t receiver_ch_value[9]; //PIN_CH_1 --> receiver_ch_value[1], and so on.
 uint16_t receiver_ch_filtered[9]; //PIN_CH_1 --> receiver_ch_value[1], and so on.
+uint32_t rc_timer[10];
+int32_t  rc_input[5];
 
 // RPM variables
 float right_rpm_filtered = 0;
@@ -268,8 +272,6 @@ float left_motor_speed_ = 0;
 float ult_direction  = 0.0;
 float ult_distance = 0.0;
 
-
-// ====================================================================================================================
 // Create publisher
 msd700_msg::HardwareState hardware_state_msg;
 ros::Publisher hardware_state_pub("hardware_state", &hardware_state_msg);
@@ -298,7 +300,7 @@ void setup(){
     RightMotor.begin();
     LeftMotor.begin();
     
-    setupPinReceiver();
+    // setupPinReceiver();
 
     RightEncoder.start(callbackRA, callbackRB);
     LeftEncoder.start(callbackLA, callbackLB);
@@ -317,16 +319,19 @@ void setup(){
     pinMode(UART2_RX, INPUT);
     pinMode(UART2_TX, INPUT);
 
-  //  while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_8G))
-  //  {
-  //    Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
-  //    delay(500);
-  //  }
-  //  mpu.setDLPFMode(MPU6050_DLPF_6);
-  //  mpu.setDHPFMode(MPU6050_DHPF_5HZ);
-  //  mpu.calibrateGyro();
-  //  mpu.setThreshold(3);
+    //  while(!mpu.begin(MPU6050_SCALE_2000DPS, MPU6050_RANGE_8G))
+    //  {
+    //    Serial.println("Could not find a valid MPU6050 sensor, check wiring!");
+    //    delay(500);
+    //  }
+    //  mpu.setDLPFMode(MPU6050_DLPF_6);
+    //  mpu.setDHPFMode(MPU6050_DHPF_5HZ);
+    //  mpu.calibrateGyro();
+    //  mpu.setThreshold(3);
     
+    init_rc();
+
+
     delay(2000);
 }
 
@@ -336,8 +341,8 @@ void loop(){
         dt = time_now - time_last;
         getReceiverSignal();
         
-        receiver_ch_filtered[1] = Ch_1_lpf.filter(receiver_ch_value[1], dt);
-        receiver_ch_filtered[2] = Ch_2_lpf.filter(receiver_ch_value[2], dt);
+        // receiver_ch_filtered[1] = Ch_1_lpf.filter(receiver_ch_value[1], dt);
+        // receiver_ch_filtered[2] = Ch_2_lpf.filter(receiver_ch_value[2], dt);
 
         //Calculate the robot position and velocity
         calculatePose();
@@ -349,13 +354,62 @@ void loop(){
         time_last = time_now;
         debug();
         nh.spinOnce();  
-
-
-        // Reset Variable
-        right_pwm = 0;
-        left_pwm = 0;        
     }
 }
+
+void init_rc(){
+  attachPCINT(digitalPinToPCINT(PIN_CH_1), RC1_ISR, CHANGE);
+  attachPCINT(digitalPinToPCINT(PIN_CH_2), RC2_ISR, CHANGE);
+  attachPCINT(digitalPinToPCINT(PIN_CH_3), RC3_ISR, CHANGE);
+  attachPCINT(digitalPinToPCINT(PIN_CH_4), RC4_ISR, CHANGE);
+  attachPCINT(digitalPinToPCINT(PIN_CH_5), RC5_ISR, CHANGE);
+}
+
+void RC1_ISR(void){
+  if(PINK & 0B00000001){
+    rc_timer[0] = micros();
+  }else{
+    rc_timer[1] = micros();
+    rc_input[0] = rc_timer[1] - rc_timer[0];
+  }
+}
+
+void RC2_ISR(void){
+  if(PINK & 0B00000010){
+    rc_timer[2] = micros();
+  }else{
+    rc_timer[3] = micros();
+    rc_input[1] = rc_timer[3] - rc_timer[2];
+  }
+}
+
+void RC3_ISR(void){
+  if(PINK & 0B00000100){
+    rc_timer[4] = micros();
+  }else{
+    rc_timer[5] = micros();
+    rc_input[2] = rc_timer[5] - rc_timer[4];
+  }
+}
+
+void RC4_ISR(void){
+  if(PINK & 0B00001000){
+    rc_timer[6] = micros();
+  }else{
+    rc_timer[7] = micros();
+    rc_input[3] = rc_timer[7] - rc_timer[6];
+  }
+}
+
+void RC5_ISR(void){
+  if(PINK & 0B00010000){
+    rc_timer[8] = micros();
+  }else{
+    rc_timer[9] = micros();
+    rc_input[4] = rc_timer[9] - rc_timer[8];
+  }
+}
+
 
 void setupPinReceiver(){
     pinMode(PIN_CH_1, INPUT);
@@ -369,16 +423,23 @@ void setupPinReceiver(){
 }
 
 void getReceiverSignal() {
-    receiver_ch_value[current_channel] = pulseIn(getChannelPin(current_channel), HIGH, PERIOD_TIME);
-
-    // Constrain the channel value within a specific range if needed
-    receiver_ch_value[current_channel] = constrain(receiver_ch_value[current_channel], 1000, 2000);
-
-    // Move to the next channel for the next loop iteration
-    current_channel++;
-    if (current_channel > NUM_CH) {
-        current_channel = 1; // Reset to the first channel if all channels are processed
-    }
+    // new algorithm
+    receiver_ch_filtered[1] = rc_input[0];
+    receiver_ch_filtered[2] = rc_input[1];
+    receiver_ch_value[3]    = rc_input[2];
+    receiver_ch_value[4]    = rc_input[3];
+    receiver_ch_value[5]    = rc_input[4];
+    
+//    receiver_ch_value[current_channel] = pulseIn(getChannelPin(current_channel), HIGH, PERIOD_TIME);
+//
+//    // Constrain the channel value within a specific range if needed
+//    receiver_ch_value[current_channel] = constrain(receiver_ch_value[current_channel], 1000, 2000);
+//
+//    // Move to the next channel for the next loop iteration
+//    current_channel++;
+//    if (current_channel > NUM_CH) {
+//        current_channel = 1; // Reset to the first channel if all channels are processed
+//    }
 }
 
 int getChannelPin(byte channel) {
