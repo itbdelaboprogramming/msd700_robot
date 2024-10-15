@@ -17,7 +17,7 @@ from libs.marker_visualization import MarkerVisualization
 from shapely.geometry import Polygon, Point
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from actionlib_msgs.msg import GoalStatus
-from geometry_msgs.msg import PointStamped, PoseStamped
+from geometry_msgs.msg import PointStamped, PoseStamped, PoseWithCovarianceStamped
 from nav_msgs.msg import OccupancyGrid
 from nav_msgs.srv import GetPlan
 from math import *
@@ -98,6 +98,14 @@ class MapDrive(MarkerVisualization):
 
 
 	def do_boustrophedon(self, poly, costmap):
+		# Get initial pose from amcl
+		amcl_pose: PoseWithCovarianceStamped = rospy.wait_for_message("/amcl_pose", PoseWithCovarianceStamped)
+		initial_x = amcl_pose.pose.pose.position.x
+		initial_y = amcl_pose.pose.pose.position.y
+		initial_angle = tf.transformations.euler_from_quaternion([amcl_pose.pose.pose.orientation.x, 
+																  amcl_pose.pose.pose.orientation.y, 
+																  amcl_pose.pose.pose.orientation.z, 
+																  amcl_pose.pose.pose.orientation.w])[2]
 		# Cut polygon area from costmap
 		(minx, miny, maxx, maxy) = poly.bounds
 		rospy.loginfo("Converting costmap at x=%.2f..%.2f, y=%.2f %.2f for Boustrophedon Decomposition" % (minx, maxx, miny, maxy))
@@ -161,10 +169,12 @@ class MapDrive(MarkerVisualization):
 			else:
 				rospy.logdebug("Creating polygon from Boustrophedon Decomposition %s" % (str(points)))
 				self.drive_polygon(Polygon(points))
+		# back to initial position
+		self.next_pos(initial_x, initial_y, initial_angle)
 		rospy.loginfo("Boustrophedon Decomposition done")
 
 	def next_pos(self, x, y, angle):
-		rospy.loginfo("Moving to (%f, %f, %.0f�)" % (x, y, angle*180/pi))
+		rospy.loginfo("Moving to (%f m, %f m, %.0f deg)" % (x, y, angle*180/pi))
 
 		goal = MoveBaseGoal()
 		angle_quat = tf.transformations.quaternion_from_euler(0, 0, angle)
