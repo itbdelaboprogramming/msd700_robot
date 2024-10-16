@@ -25,7 +25,7 @@
             <arg name="open_rviz"       	value="$(arg open_rviz)"/>
             <arg name="rviz_config"     	value="$(arg rviz_config)"/>
             <arg name="model"          	    value="$(arg model_sim)"/>
-            <arg name="map_file"        	value="$(find msd700_navigations)/maps/$(arg map_file_sim)"/>
+            <arg name="map_file_sim"        value="$(arg map_file_sim)"/>
             <arg name="odom_topic"          value="$(arg odom_topic)"/>   
             <arg name="imu_topic"           value="$(arg imu_topic)"/> 
         </include>            
@@ -39,7 +39,7 @@
             <arg name="open_rviz"       	value="$(arg open_rviz)"/>
             <arg name="rviz_config"     	value="$(arg rviz_config)"/>
             <arg name="model"          	    value="$(arg model)"/>
-            <arg name="map_file"        	value="$(find msd700_navigations)/maps/$(arg map_file)"/>
+            <arg name="map_file"        	value="$(arg map_file)"/>
             <arg name="odom_topic"          value="$(arg odom_topic)"/>   
             <arg name="imu_topic"           value="$(arg imu_topic)"/> 
         </include>
