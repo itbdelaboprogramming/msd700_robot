@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
 
 <launch>
-    <arg name="move_forward_only"   default="false"/>
-    <arg name="open_rviz"           default="true"/>
+    <arg name="use_teleop"          default="false"/>
     <arg name="use_simulator"       default="false"/>
+    <arg name="open_rviz"           default="true"/>
+    <arg name="move_forward_only"   default="false"/>
     <arg name="map_file"            default="ppti.yaml"/>
     <arg name="map_file_sim"        default="turtlebot_house.yaml"/>
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_boustrophedon.rviz"/>
     <arg name="model"               default="$(find xacro)/xacro    $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="model_sim"           default="$(find xacro)/xacro    $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro"/>
     <arg name="odom_topic"          default="/wheel/odom" />   
-    <arg name="imu_topic"           default="/imu/data" />  
+    <arg name="imu_topic"           default="/imu/data" /> 
+    <arg name="cmd_vel_topic"       default="/cmd_vel" /> 
 
 	<arg name="boustrophedon_decomposition" default="true"/>
 	<arg name="border_drive" default="false"/>
@@ -24,8 +26,8 @@
             <arg name="rviz_config"     	value="$(arg rviz_config)"/>
             <arg name="model"          	    value="$(arg model_sim)"/>
             <arg name="map_file"        	value="$(find msd700_navigations)/maps/$(arg map_file_sim)"/>
-            <arg name="odom_topic"      	value="/wheel/odom" />   
-            <arg name="imu_topic"       	value="/imu/data" /> 
+            <arg name="odom_topic"          value="$(arg odom_topic)"/>   
+            <arg name="imu_topic"           value="$(arg imu_topic)"/> 
         </include>            
     </group>
 
@@ -38,8 +40,8 @@
             <arg name="rviz_config"     	value="$(arg rviz_config)"/>
             <arg name="model"          	    value="$(arg model)"/>
             <arg name="map_file"        	value="$(find msd700_navigations)/maps/$(arg map_file)"/>
-            <arg name="odom_topic"      	value="/wheel/odom" />   
-            <arg name="imu_topic"       	value="/imu/data" /> 
+            <arg name="odom_topic"          value="$(arg odom_topic)"/>   
+            <arg name="imu_topic"           value="$(arg imu_topic)"/> 
         </include>
     </group>
 

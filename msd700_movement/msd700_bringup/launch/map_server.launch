@@ -1,0 +1,4 @@
+<launch>
+    <arg name="map_file"            default="ppti.yaml"/>
+    <node   pkg="map_server" name="map_server" type="map_server" args="$(find msd700_navigations)/maps/$(arg map_file)"/>
+</launch>
