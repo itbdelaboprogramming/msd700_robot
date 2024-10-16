@@ -1,5 +1,5 @@
-obstacle_range: 0.2   #1
-raytrace_range: 0.5 #1.5
+obstacle_range: 1   #1
+raytrace_range: 1.5 #1.5
 
 # footprint: [[-0.30, -0.20], [0.30, -0.20], [0.30,0.20], [-0.30,0.20]]                 # ITBdelabo MSD700 new design
 # footprint: [[-0.6, -0.425], [0.6, -0.425], [0.6,0.425], [-0.6,0.425]]           # ITBdelabo MSD700 Using extended hand
@@ -8,8 +8,8 @@ footprint: [[-0.105, -0.105], [-0.105, 0.105], [0.041, 0.105], [0.041, -0.105]] 
 # footprint: [[-0.275, -0.18], [0.275, -0.18], [0.275,0.18], [-0.275,0.18]]
 #robot_radius: 0.105
 
-inflation_radius: 0.2     # 0.5
-cost_scaling_factor: 0.05  # 2.0
+inflation_radius: 0.5     # 0.5
+cost_scaling_factor: 2.0  # 2.0
 
 map_type: costmap
 observation_sources: scan

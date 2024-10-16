@@ -9,8 +9,8 @@
     <group if="$(arg use_simulator)"> 
         <node pkg="move_base" type="move_base" respawn="false" name="move_base">
             <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-            <rosparam file="$(find msd700_navigations)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
-            <rosparam file="$(find msd700_navigations)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find msd700_navigations)/param/costmap_common_params_sim.yaml" command="load" ns="global_costmap" />
+            <rosparam file="$(find msd700_navigations)/param/costmap_common_params_sim.yaml" command="load" ns="local_costmap" />
             <rosparam file="$(find msd700_navigations)/param/local_costmap_params.yaml" command="load" />
             <rosparam file="$(find msd700_navigations)/param/global_costmap_params.yaml" command="load" />
             <rosparam file="$(find msd700_navigations)/param/move_base_params.yaml" command="load" />
@@ -25,7 +25,7 @@
         <node pkg="move_base" type="move_base" respawn="false" name="move_base">
             <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
             <rosparam file="$(find msd700_navigations)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
-            <rosparam file="$(find msd700_navigations)/param/costmap_common_params_sim.yaml" command="load" ns="local_costmap" />
+            <rosparam file="$(find msd700_navigations)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
             <rosparam file="$(find msd700_navigations)/param/local_costmap_params.yaml" command="load" />
             <rosparam file="$(find msd700_navigations)/param/global_costmap_params.yaml" command="load" />
             <rosparam file="$(find msd700_navigations)/param/move_base_params.yaml" command="load" />
