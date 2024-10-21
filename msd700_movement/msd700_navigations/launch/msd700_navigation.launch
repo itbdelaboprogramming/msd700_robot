@@ -2,8 +2,9 @@
     <!-- Arguments -->
     <arg name="use_teleop"          default="false"/>
     <arg name="use_simulator"       default="false"/>
-    <arg name="open_rviz"           default="false"/>
+    <arg name="open_rviz"           default="true"/>
     <arg name="move_forward_only"   default="true"/>
+    <arg name="point_mode"          default="true"          doc="point mode [single, multiple]"/>
     <arg name="map_file"            default="ppti.yaml"/>
     <arg name="map_file_sim"        default="turtlebot_house.yaml"/>
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_navigation.rviz"/>
@@ -53,6 +54,12 @@
             <arg name="model"           value="$(arg model)"/>
             <arg name="odom_topic"      value="$(arg odom_topic)"/>   
             <arg name="imu_topic"       value="$(arg imu_topic)"/> 
+        </include>
+    </group>
+
+    <group if="$(eval arg('point_mode') == 'multiple')">  
+        <include 
+            file="$(find msd700_bringup)/launch/multiple_point.launch"> 
         </include>
     </group>
 

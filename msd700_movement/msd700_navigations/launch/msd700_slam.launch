@@ -2,7 +2,7 @@
     <!-- Arguments -->
     <arg name="use_teleop"      default="false"/>
     <arg name="use_simulator"   default="false"/>
-    <arg name="open_rviz"       default="false"/>
+    <arg name="open_rviz"       default="true"/>
     <arg name="rviz_config"     default="$(find msd700_visual)/rviz/msd700_navigation.rviz"/>
     <arg name="model"           default="$(find xacro)/xacro    $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="model_sim"       default="$(find xacro)/xacro    $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro"/>

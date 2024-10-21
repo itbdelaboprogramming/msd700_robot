@@ -1,0 +1,3 @@
+<launch>
+    <node pkg="msd700_navigations" type="multiple_path.py" name="multiple_point_node" output="screen"/>
+</launch>
