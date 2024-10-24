@@ -2,6 +2,7 @@
     <arg name="use_teleop"      default="false"/>
     <arg name="use_simulator"   default="false"/>
     <arg name="open_rviz"       default="false"/>
+    <arg name="use_prototype"   default="true"/>
     <arg name="rviz_config"     default="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
     <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
 
@@ -21,8 +22,12 @@
     </group>
 
     <group unless="$(arg use_simulator)">
-        <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>           
-        <include file="$(find msd700_control)/launch/imu_filter.launch" />     
+        <group if="$(arg use_prototype)">
+            <include file="$(find msd700_control)/launch/hardware_state_sub .launch" />   
+        </group>
+
+        <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>
+        <include file="$(find msd700_control)/launch/imu_filter.launch" /> 
     </group>
 
     <group if="$(arg use_teleop)"> 
