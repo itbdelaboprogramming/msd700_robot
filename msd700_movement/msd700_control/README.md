@@ -31,7 +31,7 @@ This stack contains several launch files as follows:
 
 ### Nodes
 This package contains several custom nodes as follows:
-* `hardware_state.py` : this node subscribes to the "hardware_state" topic that consists of the `msd700_msg::HardwareState` type of messages as its main data to process. Please refer to [this link](https://github.com/itbdelaboprogramming/msd700_robot/msd700_movement/msd700_msg) for the message details. In the end, this node will publish the "wheel/odom" (`nav_msgs::Odometry`) topic and the "imu/data" (`sensor_msgs::Imu`) topic that will be supplied to the robot_localization node.
+* `hardware_state.py` : this node subscribes to the "hardware_state" topic that consists of the `msd700_msg::HardwareState` type of messages as its main data to process. Please refer to [this link](https://github.com/itbdelaboprogramming/msd700_robot/tree/master/msd700_movement/msd700_msg) for the message details. In the end, this node will publish the "wheel/odom" (`nav_msgs::Odometry`) topic and the "imu/data" (`sensor_msgs::Imu`) topic that will be supplied to the robot_localization node.
 
 * `quat_to_eul.py` : this node can be set to subscribe to the arbitrary topics that contain orientation data in quaternion such as `nav_msgs::Odometry` or `sensor_msgs::Imu`, then this node will convert those quaternions orientation into Euler angles.
 
