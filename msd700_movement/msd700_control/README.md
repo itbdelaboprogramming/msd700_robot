@@ -22,12 +22,10 @@ robot_localization pkg
 
 A robot localization stack developed by ITB de Labo for Nakayama Iron Works's MSD700 product to fuse some localization sensors using [robot_localization](https://docs.ros.org/en/noetic/api/robot_localization/html/index.html) package from ROS.
 
-### (need revision) Launch file
+### Launch file
 This stack contains several launch files as follows:
-* `imu_filter.launch` : this launch file corrects the IMU measurement by accounting for the earth's magnetic field and the robot's tilt [[1]]. This uses the "imu_filter_madgwick" node from the "imu_tools" package and the "hardware_state.py" node.
-[1]: http://wiki.ros.org/imu_tools
-* `robot_localization.launch` : this launches "imu_filter.launch" and "ekf_localization_node" from "robot_localization" package [[2]].
-[2]: https://docs.ros.org/en/noetic/api/robot_localization/html/index.html
+* `imu_filter.launch` : this launch file corrects the IMU measurement by accounting for the earth's magnetic field and the robot's tilt [[1](http://wiki.ros.org/imu_tools)]. This uses the "imu_filter_madgwick" node from the "imu_tools" package and the "hardware_state.py" node.
+* `robot_localization.launch` : this launches "imu_filter.launch" and "ekf_localization_node" from "robot_localization" package [[2](https://docs.ros.org/en/noetic/api/robot_localization/html/index.html)]
 
 ### Nodes
 This package contains several custom nodes as follows:
@@ -40,33 +38,6 @@ This stack provides an R-viz config to visualize both "wheel/odom" and "odometry
 ```bash
 rosrun rviz rviz -d ~/catkin_ws/src/msd700_robot/msd700_visual/rviz/pose_estimation.rviz
 ```
-
-cmd_vel conversion
--------- 
-
-
-
-## Launch Files
-
-### `robot_localization.launch`
-General     : Run all required component to run connect the Arduino from robot with ROS
-Detailed    :     
-
-#### Available Params   
-    - use_teleop    : 
-        boolean type param (true/false)
-        add `use_teleop:=true` to enable moving robot using keyboard
-        default -> false
-
-    - open_rviz     : 
-        boolean type param (true/false)
-        add `open_rviz:=true` to open the robot visualization using rviz
-
-
-#### How to run:
-    1. Make sure all msd700 prototype environment is alread set
-    2. use this command to launch the program
-        `roslaunch msd700_control robot_localization.launch`
 
 
 
