@@ -12,6 +12,7 @@
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load"            file="$(find msd700_control)/config/ekf_localization_config.yaml" />
         <param name="odom0"                 value="$(arg odom_topic)"/>
+        <!-- <param name="odom1"                 value="$(arg odom_topic)"/> -->
         <param name="imu0"                  value="$(arg imu_topic)"/>
         <remap from="/odometry/filtered"    to="/odometry/filtered" />
         <remap from="/wheel/odom"           to="$(arg odom_topic)"/>

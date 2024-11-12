@@ -11,8 +11,8 @@
     <arg name="model"               default="$(find xacro)/xacro    $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="model_sim"           default="$(find xacro)/xacro    $(find msd700_visual)/urdf/turtlebot3_burger.urdf.xacro"/>
     
-    <arg name="odom_topic"          default="/odom" />   
-    <!-- <arg name="odom_topic"          default="/odometry/filtered" />    -->
+    <!-- <arg name="odom_topic"          default="/odom" />    -->
+    <arg name="odom_topic"          default="/odometry/filtered" />   
     <arg name="imu_topic"           default="/imu/data" />  
     <arg name="cmd_vel_topic"       default="/cmd_vel" />
 
