@@ -2,7 +2,7 @@
 
 # Import Python Libraries
 import rospy
-from ros_msd700_msgs.msg import HardwareState
+from msd700_msg.msg import HardwareState
 # include your robot's message types                    <<<====================== Important
 
 
