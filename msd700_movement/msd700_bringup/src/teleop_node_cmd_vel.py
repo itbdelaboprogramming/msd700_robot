@@ -5,7 +5,6 @@ import sys
 import rospy  
 
 from geometry_msgs.msg import Twist
-# from msd700_msg.msg import Twist
 
 global linear_x, linear_y, linear_z
 global angular_x, angular_y, angular_z
