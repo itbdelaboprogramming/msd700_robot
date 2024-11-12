@@ -23,7 +23,7 @@
 
     <group unless="$(arg use_simulator)">
         <group if="$(arg use_prototype)">
-            <include file="$(find msd700_control)/launch/hardware_state_sub .launch" />   
+            <include file="$(find msd700_control)/launch/hardware_state_sub.launch" />   
         </group>
 
         <include file="$(find msd700_bringup)/launch/serial_launch.launch"/>
@@ -50,5 +50,6 @@
     odom_topic:= ????? (Required)
     use_teleop:= ????? 
     use_simulator:= ?????
+    use_prototype:= ???? (if using itbdelabo's msd700 prototype)
     
 -->

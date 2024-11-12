@@ -125,6 +125,8 @@ def point_subscriber():
                 print("Publishing goals one by one...")
                 for point in points:
                     publish_goal(point) 
+                    rospy.sleep(5.0)
+
             else:
                 print("No points stored yet.")
             rospy.sleep(0.5)
