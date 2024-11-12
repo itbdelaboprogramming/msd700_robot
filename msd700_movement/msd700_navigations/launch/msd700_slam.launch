@@ -32,7 +32,7 @@
             <arg name="open_rviz"       value="$(arg open_rviz)"/>
             <arg name="rviz_config"     value="$(arg rviz_config)"/>
             <arg name="model"           value="$(arg model)"/>
-            <arg name="odom_topic"      value="$(arg odom_topic)"/>   
+            <arg name="odom_topic"      value="/odom"/>   
             <arg name="imu_topic"       value="$(arg imu_topic)"/> 
         </include>
     </group>

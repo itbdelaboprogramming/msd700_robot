@@ -116,7 +116,12 @@ def rad_to_deg(angle):
     return angle_deg
 
 try:
+    prev_time = rospy.Time.now()
     while not rospy.is_shutdown():
+        cur_time    = rospy.Time.now()
+        delta_t     = (cur_time - prev_time).to_sec()
+        prev_time   = cur_time
+
         odom_msg = Odometry()
         imu_raw_msg = Imu()
         mag_msg = MagneticField()
@@ -136,20 +141,18 @@ try:
             theta = theta + (delta_right_angle - delta_left_angle) / (2*wheel_distance/100)  * theta_const
             theta = warpAngle(theta)
         else:
-            # theta = theta + (gyr_z * compute_period / 1000.0 + accum_yaw)/2
-            # theta = theta + gyr_z * compute_period / 1000.0
-            # theta = warpAngle(theta)
             theta = accum_yaw
-            # print(theta)
         
         # Calculate orientation based on IMU
         acc_filter_1    = np.array([[acc_x], [acc_y], [acc_z]])
         rotmax_filter   = rotm_from_eul(roll_filter, pitch_filter, 0.0)
         acc_filter      = np.matmul(rotmax_filter, acc_filter_1)
              
-        # Reset reading
-        right_motor_pulse_delta = 0
-        left_motor_pulse_delta = 0
+        # Calculate linear and angular velocities
+        linear_velocity = (delta_right_angle + delta_left_angle) / 2 / delta_t  # m/s
+        angular_velocity = (delta_right_angle - delta_left_angle) / (wheel_distance / 100) / delta_t  # rad/s
+
+
         last_yaw    = yaw 
 
         #Assign odometry msg
@@ -158,11 +161,8 @@ try:
         odom_msg.child_frame_id = "base_footprint"
         odom_msg.pose.pose.position = Point(float(pose_x), float(pose_y), 0.0)
         odom_msg.pose.pose.orientation  = Quaternion(*tf.transformations.quaternion_from_euler(0.0, 0.0, theta))    
-        odom_msg.twist.twist.linear     = Vector3(0.0, 0.0, 0.0)  
-        odom_msg.twist.twist.angular    = Vector3(0.0, 0.0, 0.0)   
-        # minjem msg buat debug
-        # odom_msg.twist.twist.linear     = Vector3(rad_to_deg(yaw), rad_to_deg(last_yaw), delta_yaw)  
-        # odom_msg.twist.twist.angular    = Vector3(theta, rad_to_deg(warpAngle(accum_yaw)), rad_to_deg(theta))    
+        odom_msg.twist.twist.linear     = Vector3(linear_velocity, 0.0, 0.0)  
+        odom_msg.twist.twist.angular    = Vector3(0.0, 0.0, angular_velocity)     
         odom_pub.publish(odom_msg)
         
         #Assign imu raw msg
@@ -186,6 +186,11 @@ try:
         imu_msg.angular_velocity = Vector3(gyr_filter[0], gyr_filter[1], gyr_filter[2])
         imu_msg.linear_acceleration = Vector3(acc_filter[1], acc_filter[0], acc_filter[2])
         imu_pub.publish(imu_msg)
+
+         # Reset pulse deltas for next iteration
+        right_motor_pulse_delta = 0
+        left_motor_pulse_delta = 0
+        
         rate.sleep()
         
         
