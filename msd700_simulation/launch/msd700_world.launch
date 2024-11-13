@@ -3,8 +3,8 @@
     <arg name="model" default="burger" doc="model type [burger, waffle, waffle_pi]"/>
     
     <!-- Define position arguments -->
-    <arg name="x_pos" default="-3.0"/>
-    <arg name="y_pos" default="1.0"/>
+    <arg name="x_pos" default="0.0"/>
+    <arg name="y_pos" default="0.0"/>
     <arg name="z_pos" default="0.0"/>
 
     <!-- Load the xacro file and convert it to URDF -->
@@ -14,7 +14,7 @@
     <!-- Launch Gazebo with an empty world -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <!-- <arg name="world_name" value="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
-        <arg name="world_name" value="$(find msd700_simulation)/worlds/large.world"/>
+        <arg name="world_name" value="$(find msd700_simulation)/worlds/large2.world"/>
         <arg name="paused" value="false"/>
         <arg name="use_sim_time" value="true"/>
         <arg name="gui" value="true"/>
