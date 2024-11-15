@@ -1,6 +1,6 @@
 <launch>
 
-    <arg name="model" default="burger" doc="model type [burger, waffle, waffle_pi]"/>
+    <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi]"/>
     
     <!-- Define position arguments -->
     <arg name="x_pos" default="0.0"/>
