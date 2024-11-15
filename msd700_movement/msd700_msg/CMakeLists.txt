@@ -9,6 +9,7 @@ project(msd700_msg)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
     std_msgs
+    geometry_msgs
     message_generation
 )
 
@@ -50,6 +51,7 @@ add_message_files(
   FILES
   HardwareCommand.msg
   HardwareState.msg
+  WebNavCommand.msg
 )
 
 ## Generate services in the 'srv' folder
@@ -69,7 +71,8 @@ add_message_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
+  std_msgs
+  geometry_msgs  # Or other packages containing msgs
 )
 
 ################################################

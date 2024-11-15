@@ -1,2 +1,2 @@
-String command
-PoseStamped pose
+string command
+geometry_msgs/PoseStamped pose
