@@ -25,7 +25,9 @@
     </include>
     
     <!-- exploration -->
-    <include file="$(find explore_lite)/launch/explore.launch" />
+    <include file="$(find explore_lite)/launch/explore.launch">
+        <param name="visualize" value="true"/>
+    </include>
 
     <!-- move_base -->
     <include file="$(find msd700_navigations)/launch/algorithm/move_base.launch">
