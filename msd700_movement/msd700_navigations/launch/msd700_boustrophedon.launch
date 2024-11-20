@@ -6,7 +6,7 @@
     <arg name="open_rviz"           default="true"/>
     <arg name="move_forward_only"   default="false"/>
     <arg name="map_file"            default="ppti.yaml"/>
-    <arg name="map_file_sim"        default="large2.yaml"/>
+    <arg name="map_file_sim"        default="large.yaml"/>
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_boustrophedon.rviz"/>
     <arg name="model"               default="$(find xacro)/xacro    $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="model_sim"           default="$(find xacro)/xacro    $(find msd700_visual)/urdf/turtlebot3_waffle.urdf.xacro"/>
