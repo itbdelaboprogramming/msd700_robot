@@ -9,14 +9,11 @@
 
 
 # Program workflow
-# - Subscribe to topic with command and points
-# - read the command
-#     A : add
-#     D : delete
-#     X : clear
-#     S : save
-# - Save points in (csv?)
-
-
+# - Subscribe to the topic
+# - Publish to cmd_vel
 
 #=============================================================
+
+
+
+
