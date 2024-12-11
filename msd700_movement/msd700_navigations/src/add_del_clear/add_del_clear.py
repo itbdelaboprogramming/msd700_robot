@@ -30,7 +30,7 @@ from msd700_msg.msg import WebNavCommand
 
 mode    = "looping"
 paused  = False  
-cmd_pos = None
+command = None
 x_pos   = None
 y_pos   = None
 z_pos   = None
@@ -38,6 +38,7 @@ w_ort   = None
 x_ort   = None
 y_ort   = None
 z_ort   = None
+mode    = None
 loop_index = 0
 forward = True
 
@@ -46,8 +47,8 @@ published_stack = []
 publish_flag = True
 
 def sub_callback(msg: WebNavCommand):
-    global cmd_pos, x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort, publish_flag, loop_index, forward
-    cmd_pos = msg.command
+    global command, x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort, publish_flag, loop_index, forward
+    command = msg.command
     x_pos   = msg.pose.pose.position.x
     y_pos   = msg.pose.pose.position.y
     z_pos   = 0.0
@@ -56,15 +57,15 @@ def sub_callback(msg: WebNavCommand):
     y_ort   = 0.0
     z_ort   = msg.pose.pose.orientation.z
 
-    if cmd_pos == "H":
+    if command == "H":
         publish_flag = False
-        cmd_pos = "P"
+        command = "P"
         print(f"flag toggled to : {publish_flag}")
-    elif cmd_pos == "R":
+    elif command == "R":
         publish_flag = True
-        cmd_pos = "P"
+        command = "P"
         print(f"flag toggled to : {publish_flag}")
-    elif cmd_pos == "P":
+    elif command == "P":
         publish_flag = True
         loop_index = 0
         forward = True  
@@ -111,7 +112,7 @@ def clear_markers():
 
 def add_point():
     """Publish the point and store it in an array/stack"""
-    global cmd_pos, x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort
+    global command, x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort
     point = (x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort)
     
     if point not in point_stack:
@@ -123,7 +124,7 @@ def add_point():
 
 def delete_point():
     """Check the array/stack, delete all points in radius 0.1"""
-    global cmd_pos, x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort
+    global command, x_pos, y_pos, z_pos, w_ort, x_ort, y_ort, z_ort
     threshold = 0.1
     original_stack = point_stack[:]
     removed_points = []
@@ -199,15 +200,19 @@ if __name__ == '__main__':
     try:
         while not rospy.is_shutdown():
             rospy.sleep(1.0) 
-            if cmd_pos == "A":
+            if command == "A":
                 add_point()
-            elif cmd_pos == "D":
+            elif command == "D":
                 delete_point()
-            elif cmd_pos == "X":
+            elif command == "X":
                 clear_point()
-            elif cmd_pos == "S":
+            elif command == "S":
                 save_point()
-            elif cmd_pos == "P":
+            elif command == "M1":
+                mode = "M1"
+            elif command == "M2":
+                mode = "M2"
+            elif command == "P":
                 published_stack = point_stack
                 if len(published_stack) > 0:
                     print("Publishing goals in a continuous sequence...")
@@ -218,17 +223,26 @@ if __name__ == '__main__':
                         publish_goal(point)
                         rospy.sleep(5.0)
 
-                        # Update the index for the next point
-                        if forward:
-                            loop_index += 1
-                            if loop_index == len(published_stack) - 1:
-                                forward = False  # Reverse direction
-                        else:
-                            loop_index -= 1
-                            if loop_index == 0:
-                                forward = True  # Forward direction again
+                        if mode is not None:
+                            if mode == "M1": # Mode 12321
+                                # Update the index for the next point
+                                if forward:
+                                    loop_index += 1
+                                    if loop_index == len(published_stack) - 1:
+                                        forward = False  # Reverse direction
+                                else:
+                                    loop_index -= 1
+                                    if loop_index == 0:
+                                        forward = True  # Forward direction again
 
-                        print(f"published index {loop_index}")
+                                print(f"published index {loop_index}")
+                            elif mode == "M2": # Mode 123123
+                                forward = True
+                                loop_index += 1
+                                if loop_index == len(published_stack):
+                                    loop_index = 0 # Reset the loop index
+                        else:
+                            print("Mode hasn't been chosen")
                 else:
                     print("No points stored yet.")
             else:

@@ -35,7 +35,6 @@ w_ort, x_ort, y_ort, z_ort  = None, None, None, None
 
 point_pub = rospy.Publisher('web_point_cmd', WebNavCommand, queue_size=10)
 
-
 def get_keypressed():
     global key_pressed
 
@@ -44,34 +43,38 @@ def get_keypressed():
     black = (0, 0, 0)
     gray = (200, 200, 200)
     blue = (0, 0, 255)
+    blink_color = (100, 100, 100)  # Color for the blink effect
 
     # Font and button dimensions
     font = py.font.Font('freesansbold.ttf', 24)
     button_width, button_height = 120, 50
-    button_margin = 10
 
     # Button labels and positions
     buttons = {
-        "Add"   : (90, 10),
+        "Add": (90, 10),
         "Delete": (90, 70),
-        "Clear" : (90, 130),
-        "Save"  : (90, 190),
-        "Play"  : (90, 250),
-        "Hold"  : (90, 310),
+        "Clear": (90, 130),
+        "Save": (90, 190),
+        "Play": (90, 250),
+        "Hold": (90, 310),
         "Resume": (90, 370),
-        "Stop"  : (90, 430),
-    }   
+        "Stop": (90, 430),
+        "Mode 1": (300, 10),
+        "Mode 2": (300, 70),
+    }
 
-    # Draw the interface
-    display.fill(white)  # Clear the screen with a white background
-    for label, pos in buttons.items():
-        # Draw button rectangles
-        py.draw.rect(display, gray, (pos[0], pos[1], button_width, button_height))
-        # Render button text
-        text = font.render(label, True, black)
-        text_rect = text.get_rect(center=(pos[0] + button_width // 2, pos[1] + button_height // 2))
-        display.blit(text, text_rect)
-    py.display.update()
+    # Function to draw buttons
+    def draw_buttons(highlight_label=None):
+        display.fill(white)  # Clear the screen with a white background
+        for label, pos in buttons.items():
+            color = blink_color if label == highlight_label else gray
+            py.draw.rect(display, color, (pos[0], pos[1], button_width, button_height))
+            text = font.render(label, True, black)
+            text_rect = text.get_rect(center=(pos[0] + button_width // 2, pos[1] + button_height // 2))
+            display.blit(text, text_rect)
+        py.display.update()
+
+    draw_buttons()  # Initial button drawing
 
     for event in py.event.get():
         if event.type == py.QUIT:
@@ -84,6 +87,11 @@ def get_keypressed():
             for label, pos in buttons.items():
                 button_rect = py.Rect(pos[0], pos[1], button_width, button_height)
                 if button_rect.collidepoint(mouse_pos):
+                    # Blink the button
+                    draw_buttons(highlight_label=label)
+                    py.time.delay(200)  # Pause for 200ms for the blink effect
+                    draw_buttons()  # Redraw buttons to reset the color
+
                     # Set key_pressed based on button clicked
                     if label == "Add":
                         key_pressed = "A"
@@ -98,9 +106,13 @@ def get_keypressed():
                     elif label == "Hold":
                         key_pressed = "H"
                     elif label == "Resume":
-                        key_pressed = "R"  
+                        key_pressed = "R"
                     elif label == "Stop":
-                        key_pressed = "Z"  
+                        key_pressed = "Z"
+                    elif label == "Mode 1":
+                        key_pressed = "M1"
+                    elif label == "Mode 2":
+                        key_pressed = "M2"
                     print(f"Button clicked: {label}, key_pressed set to {key_pressed}")
                     return  # Exit after processing the button click
 
@@ -185,7 +197,7 @@ if __name__ == '__main__':
         rate = rospy.Rate(100)
 
         py.init()
-        display = py.display.set_mode((300,500))
+        display = py.display.set_mode((510,500))
 
         # Setup Subscriber and Publisher
         # point_sub = rospy.Subscriber('move_base_simple/goal', PoseStamped, pose_callback, queue_size=10)
@@ -193,7 +205,7 @@ if __name__ == '__main__':
         while not rospy.is_shutdown():
             get_keypressed()
 
-            if (key_pressed == "P") or (key_pressed == "H") or (key_pressed == "Z") or (key_pressed == "X") or (key_pressed == "R"):
+            if (key_pressed == "M1") or (key_pressed == "M2")  or (key_pressed == "P") or (key_pressed == "H") or (key_pressed == "Z") or (key_pressed == "X") or (key_pressed == "R"):
                 if key_past is not key_pressed:
                     publish_instant(point_pub)
             if (key_pressed == "Z"):
