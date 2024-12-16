@@ -2,8 +2,8 @@
 
     <!-- Modifiable Args -->
     <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi]"/>
-    <arg name="world_name" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
-    <!-- <arg name="world_name" default="$(find msd700_simulation)/worlds/large.world"/> -->
+    <!-- <arg name="world_name" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
+    <arg name="world_name" default="$(find msd700_simulation)/worlds/large.world"/>
 
     <!-- Do not modify this arg, only for comparison -->
     <arg name="world_path_house" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
