@@ -8,7 +8,8 @@
 
     <arg name="odom_topic"          default="/wheel/odom" />   
     <arg name="imu_topic"           default="/imu/data" />  
-    <arg name="cmd_vel_topic"       default="/cmd_vel" />
+    <arg name="cmd_vel_topic"       default="mux/nav_vel" />
+    <arg name="cmd_vel_out_twist_mux" default="/cmd_vel"/>
 
     <group unless="$(arg use_simulator)"> 
         <include file="$(find msd700_bringup)/launch/bridger.launch"/>
@@ -27,6 +28,11 @@
     <!-- exploration -->
     <include file="$(find explore_lite)/launch/explore.launch">
         <param name="visualize" value="true"/>
+    </include>
+
+    <!-- Launch Twist Mux -->
+    <include file="$(find msd700_control)/launch/twist_mux.launch">
+        <arg name="cmd_vel_out" value="$(arg cmd_vel_out_twist_mux)"/>
     </include>
 
     <!-- move_base -->

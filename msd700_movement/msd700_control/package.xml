@@ -65,6 +65,9 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>tf2</exec_depend>
 
+  <exec_depend>roslaunch</exec_depend>
+
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
