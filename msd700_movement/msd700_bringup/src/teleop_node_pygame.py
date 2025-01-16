@@ -3,7 +3,7 @@
 import pygame as py
 import sys
 import rospy  
-from msd700_msg.msg import HardwareCommand
+from msd700_msgs.msg import HardwareCommand
 
 
 # Declare Variables

@@ -16,8 +16,8 @@ Additional
 import rospy
 from geometry_msgs.msg import Twist, Pose, Point, Quaternion
 from nav_msgs.msg import Odometry
-from msd700_msg.msg import HardwareState
-from msd700_msg.msg import HardwareCommand
+from msd700_msgs.msg import HardwareState
+from msd700_msgs.msg import HardwareCommand
 import numpy as np
 
 

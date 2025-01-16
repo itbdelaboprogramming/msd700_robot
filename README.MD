@@ -19,7 +19,7 @@ This repo contains all of the robot repositories containing robot movement, SLAM
 | msd700_bringup           | Consist the launch files to execute primitive robot tasks |
 | msd700_control           | The main task for this package is to merge sensor reading using robot_localization package |
 | msd700_firmware          | Consists Arduino files spesific for ITBdeLabo's msd700 prototype |
-| msd700_msg               | Consist all of the robot messages |
+| msd700_msgs              | Consist all of the robot messages |
 | msd700_navigations       | Contains SLAM localization algorithm, autonomous mapping (explore) and autonomous navigation |
 |
 
