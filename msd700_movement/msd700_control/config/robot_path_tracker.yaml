@@ -1,7 +1,10 @@
 robot_path_tracker:
-  mode_continuous: false
+  mode_continuous: true
   max_path: 50
   frame_id: "odom"
-  pose_topic: "/robot_pose"
-  path_topic: "/robot_path"
-  clear_service_name: "/clear_path"
+  pose_topic: "/path_track/robot_pose"
+  path_topic: "/path_track/robot_path"
+  clear_service_name: "/path_track/clear_path"
+  draw_marker: true
+  marker_length: 0.2
+  marker_topic: "/path_track/robot_marker"

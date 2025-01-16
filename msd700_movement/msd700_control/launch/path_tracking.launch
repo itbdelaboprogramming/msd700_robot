@@ -2,6 +2,10 @@
     <!-- Load parameters from YAML -->
     <rosparam file="$(find msd700_control)/config/robot_path_tracker.yaml" command="load" />
 
+    <node name="robot_pose_path_tracker" pkg="robot_pose_publisher" type="robot_pose_publisher" output="screen">
+        <remap from="/robot_pose" to="/path_track/robot_pose"/>
+    </node>
+
     <!-- Node launch -->
     <node pkg="msd700_control" type="path_tracking.py" name="robot_path_tracker" output="screen" />
 </launch>
