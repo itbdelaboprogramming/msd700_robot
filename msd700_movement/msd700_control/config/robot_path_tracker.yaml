@@ -1,0 +1,7 @@
+robot_path_tracker:
+  mode_continuous: false
+  max_path: 50
+  frame_id: "odom"
+  pose_topic: "/robot_pose"
+  path_topic: "/robot_path"
+  clear_service_name: "/clear_path"

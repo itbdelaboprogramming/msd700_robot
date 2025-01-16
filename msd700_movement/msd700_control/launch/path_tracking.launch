@@ -1,0 +1,7 @@
+<launch>
+    <!-- Load parameters from YAML -->
+    <rosparam file="$(find msd700_control)/config/robot_path_tracker.yaml" command="load" />
+
+    <!-- Node launch -->
+    <node pkg="msd700_control" type="path_tracking.py" name="robot_path_tracker" output="screen" />
+</launch>

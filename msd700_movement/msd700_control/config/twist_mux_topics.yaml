@@ -4,8 +4,12 @@
 # - topic   : input topic of geometry_msgs::Twist type
 # - timeout : timeout in seconds to start discarding old messages, and use 0.0 speed instead
 # - priority: priority in the range [0, 255]; the higher the more priority over other topics
-
 topics:
+-
+  name    : navigation
+  topic   : mux/allign
+  timeout : 3.0
+  priority: 5
 -
   name    : navigation
   topic   : mux/nav_vel
