@@ -3,7 +3,7 @@
 # Import Python Libraries
 import rospy
 import tf
-from msd700_msg.msg import HardwareState
+from msd700_msgs.msg import HardwareState
 from sensor_msgs.msg import Imu, MagneticField
 from geometry_msgs.msg import Point, Quaternion, Vector3
 from nav_msgs.msg import Odometry
@@ -19,8 +19,13 @@ max_speed_angular   = rospy.get_param("/raw_sensor/max_speed_angular", 1.75)
 wheel_radius        = rospy.get_param("/raw_sensor/wheel_radius", 2.75)	        # in cm
 wheel_distance      = rospy.get_param("/raw_sensor/wheel_distance", 10.0)       # in cm
 gear_ratio          = rospy.get_param("/raw_sensor/gear_ratio", 1980.0)
+ppr                 = rospy.get_param("/raw_sensor/ppr", 24)
 use_imu             = rospy.get_param("/raw_sensor/use_imu", 1)
 az_offset           = rospy.get_param("/raw_sensor/az_offset", 0.31)
+
+print("")
+print(ppr)
+print("")
 
 # Global Variables
 sub_count = 0
@@ -127,9 +132,14 @@ try:
         mag_msg = MagneticField()
         imu_msg = Imu()
     
-        # Calculate each wheel angle in meters
-        delta_right_angle   = (2*np.pi * wheel_radius / 100 ) * (right_motor_pulse_delta / gear_ratio)
-        delta_left_angle    = (2*np.pi * wheel_radius / 100 ) * (left_motor_pulse_delta / gear_ratio)
+        # Calculate each wheel angle in meters (using gear ratio)
+        # delta_right_angle   = (2*np.pi * wheel_radius / 100 ) * (right_motor_pulse_delta / gear_ratio)
+        # delta_left_angle    = (2*np.pi * wheel_radius / 100 ) * (left_motor_pulse_delta / gear_ratio)
+
+        # Calculate each wheel angle in meters (using ppr)
+        distance_per_pulse = (2 * np.pi * (wheel_radius / 100)) / ppr
+        delta_right_angle = distance_per_pulse * right_motor_pulse_delta
+        delta_left_angle = distance_per_pulse * left_motor_pulse_delta
     
         sum_right   = sum_right + delta_right_angle
         sum_left    = sum_left + delta_left_angle

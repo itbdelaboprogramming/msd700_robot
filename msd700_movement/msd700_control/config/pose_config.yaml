@@ -4,6 +4,7 @@ raw_sensor:
   max_speed_angular: 20   # rad/s (max: 3.0 rad/s)
   wheel_radius: 2.75        # cm (current prototype's wheel has diameter of 5.5 cm approximately)
   wheel_distance: 30.0      # cm
-  gear_ratio: 1980.0
+  # gear_ratio: 1980.0
+  ppr : 960
   use_imu: 1                # set to 1 if you are using IMU as heading
   az_offset: 0.31

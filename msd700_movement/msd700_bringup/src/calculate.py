@@ -2,7 +2,7 @@
 
 import rospy
 import numpy as np
-from ros_msd700_msg.msg import HardwareState
+from msd700_msgs.msg import HardwareState
 
 
 rospy.init_node('speed_calculator')
