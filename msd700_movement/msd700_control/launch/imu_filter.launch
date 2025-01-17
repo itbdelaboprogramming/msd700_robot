@@ -2,5 +2,6 @@
     <node pkg="imu_filter_madgwick" type="imu_filter_node" name="imu_filter_node" output="screen">
         <param name="gain" value="0.01"/>
         <remap from="/imu/data" to="/imu/from_filter"/>
+        
     </node>
 </launch>

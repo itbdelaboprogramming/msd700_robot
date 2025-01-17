@@ -9,14 +9,14 @@
     <arg name="odom_topic"      default="/wheel/odom" />   
     <arg name="imu_topic"       default="/imu/data" />    
     
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
+    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local">
         <rosparam command="load"            file="$(find msd700_control)/config/ekf_localization_config.yaml" />
-        <param name="odom0"                 value="$(arg odom_topic)"/>
+        <param name="odom0"                 value="$(arg odom_topic)"/> -->
         <!-- <param name="odom1"                 value="$(arg odom_topic)"/> -->
-        <param name="imu0"                  value="$(arg imu_topic)"/>
+        <!-- <param name="imu0"                  value="$(arg imu_topic)"/>
         <remap from="/odometry/filtered"    to="/odometry/filtered" />
         <remap from="/wheel/odom"           to="$(arg odom_topic)"/>
-    </node>
+    </node> -->
 
     <group if="$(arg use_simulator)">
         <include    file="$(find msd700_simulation)/launch/msd700_world.launch"/>
