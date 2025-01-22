@@ -197,9 +197,13 @@ try:
         imu_msg.linear_acceleration = Vector3(acc_filter[1], acc_filter[0], acc_filter[2])
         imu_pub.publish(imu_msg)
 
-         # Reset pulse deltas for next iteration
+        # Reset pulse deltas for next iteration
         right_motor_pulse_delta = 0
         left_motor_pulse_delta = 0
+
+        # Publish tf
+        br = tf.TransformBroadcaster()
+        br.sendTransform((pose_x, pose_y, 0), tf.transformations.quaternion_from_euler(0, 0, theta), rospy.Time.now(), "base_footprint", "odom")
         
         rate.sleep()
         
