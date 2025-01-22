@@ -209,6 +209,7 @@ include_directories(
 
 catkin_install_python(PROGRAMS 
   scripts/path_tracking.py
+  scripts/homebase.py
   
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

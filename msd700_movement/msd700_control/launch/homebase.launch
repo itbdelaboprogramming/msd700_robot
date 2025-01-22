@@ -1,0 +1,7 @@
+<launch>
+    <!-- Load parameters from YAML -->
+    <rosparam file="$(find msd700_control)/config/homebase_config.yaml" command="load" />
+
+    <node pkg="msd700_control" type="homebase.py" name="homebase" output="screen" />
+
+</launch>

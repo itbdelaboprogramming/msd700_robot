@@ -1,0 +1,30 @@
+# Koordinat x homebase, isi null jika tidak ingin diatur
+# Koordinat y homebase, isi null jika tidak ingin diatur
+# orientation: sudut orientasi homebase, isi null jika tidak ingin diatur
+# home_base_frame: frame homebase
+# base_frame: frame robot
+# topic_pub_location: topik untuk publish lokasi homebase
+# topic_sub_sethome: topik untuk subscribe perintah set homebase
+# service_change_homebase_rviz: service untuk mengubah homebase melalui rviz
+# msg_command: pesan yang dikirimkan ke robot untuk mengarahkan ke homebase
+# rate_publish_homebase: frekuensi publish lokasi homebase
+# service_goto: service untuk perintah pergi ke homebase
+# service_goto_cancel: service untuk membatalkan perintah pergi ke homebase
+# is_use_gui: true jika ingin menggunakan GUI untuk mengubah homebase, false jika tidak
+
+# Jika x,y,orientation diisi null, maka homebase akan diatur pada posisi robot saat ini
+
+homebase:
+  x: -2.5
+  y: 1.0 
+  orientation: 90
+  home_base_frame: "map"
+  base_frame: "base_footprint"
+  topic_pub_location: "/homebase/location"
+  topic_sub_sethome: "/homebase/sethomebase"
+  service_change_homebase_rviz: "/homebase/service_change_homebase_rviz"
+  msg_command: "H"
+  rate_publish_homebase: 1 
+  service_goto: "/homebase/goto"
+  service_goto_cancel: "/homebase/goto_cancel"
+  is_use_gui: true 
