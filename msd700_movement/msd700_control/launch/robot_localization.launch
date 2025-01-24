@@ -5,6 +5,8 @@
     <arg name="use_prototype"   default="true"/>
     <arg name="rviz_config"     default="$(find msd700_visual)/rviz/pose_estimation.rviz"/>
     <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
+    <arg name="custom_model"    default="sirius"/>
+    <arg name="is_use_custom_model" default="false"/>
 
     <arg name="odom_topic"      default="/wheel/odom" />   
     <arg name="imu_topic"       default="/imu/data" />    
@@ -19,7 +21,10 @@
     </node> -->
 
     <group if="$(arg use_simulator)">
-        <include    file="$(find msd700_simulation)/launch/msd700_world.launch"/>
+        <include    file="$(find msd700_simulation)/launch/msd700_world.launch">
+            <arg name="is_use_custom_model" value="$(arg is_use_custom_model)"/>
+            <arg name="model"           value="$(arg custom_model)"/>
+        </include>
     </group>
 
     <group unless="$(arg use_simulator)">
@@ -35,12 +40,25 @@
         <include file="$(find msd700_bringup)/launch/teleop.launch" />
     </group>
 
-    <group if="$(arg open_rviz)"> 
-        <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
-            <arg name="rviz_config"     value="$(arg rviz_config)"/>
-            <arg name="model"           value="$(arg model)"/>
-        </include>
+    <!-- Conditionally include RViz launch based on is_use_custom_model -->
+    <group unless="$(arg is_use_custom_model)">
+        <group if="$(arg open_rviz)">
+            <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
+                <arg name="rviz_config" value="$(arg rviz_config)"/>
+                <arg name="model" value="$(arg model)"/>
+            </include>
+        </group>
     </group>
+
+    <group if="$(arg is_use_custom_model)">
+        <group if="$(arg open_rviz)">
+            <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
+                <arg name="rviz_config" value="$(arg rviz_config)"/>
+                <arg name="model" value="$(find xacro)/xacro --inorder $(find msd700_visual)/urdf/msd700_$(arg custom_model).urdf.xacro"/>
+            </include>
+        </group>
+    </group>
+
 </launch>
 
 

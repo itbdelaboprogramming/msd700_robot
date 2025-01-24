@@ -1,9 +1,12 @@
 <launch>
 
     <!-- Modifiable Args -->
-    <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi]"/>
-    <!-- <arg name="world_name" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/> -->
-    <arg name="world_name" default="$(find msd700_simulation)/worlds/large.world"/>
+    <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi, sirius]"/>
+
+    <arg name="is_use_custom_model" default="false" doc="use turtlebot3 or custom model"/>
+    
+    <arg name="world_name" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
+    <!-- <arg name="world_name" default="$(find msd700_simulation)/worlds/large.world"/> -->
 
     <!-- Do not modify this arg, only for comparison -->
     <arg name="world_path_house" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_house.world"/>
@@ -26,21 +29,43 @@
     <!-- <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" 
             args="-urdf -model irbot -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" /> -->
 
+    <!-- Conditionally include msd700 parameters and nodes -->
+    <group if="$(arg is_use_custom_model)">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find msd700_visual)/urdf/msd700_$(arg model).urdf.xacro" />
 
-    <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+        <group if="$(eval arg('world_name') == arg('world_path_house'))">
+            <arg name="x_pos" default="-3.0"/>
+            <arg name="y_pos" default="1.0"/>
+            <arg name="z_pos" default="0.0"/>
+            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model msd700 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
+        </group>
+        <group unless="$(eval arg('world_name') == arg('world_path_house'))">
+            <arg name="x_pos" default="0.0"/>
+            <arg name="y_pos" default="0.0"/>
+            <arg name="z_pos" default="0.0"/>
+            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model msd700 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
+        </group>
+    </group>
 
-    <group if="$(eval arg('world_name') == arg('world_path_house'))">
-        <arg name="x_pos" default="-3.0"/>
-        <arg name="y_pos" default="1.0"/>
-        <arg name="z_pos" default="0.0"/>
-        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
+    <!-- Conditionally include turtlebot3 parameters and nodes -->
+    <group unless="$(arg is_use_custom_model)">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+
+        <group if="$(eval arg('world_name') == arg('world_path_house'))">
+            <arg name="x_pos" default="-3.0"/>
+            <arg name="y_pos" default="1.0"/>
+            <arg name="z_pos" default="0.0"/>
+            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
+        </group>
+        <group unless="$(eval arg('world_name') == arg('world_path_house'))">
+            <arg name="x_pos" default="0.0"/>
+            <arg name="y_pos" default="0.0"/>
+            <arg name="z_pos" default="0.0"/>
+            <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
+        </group>
     </group>
-    <group unless="$(eval arg('world_name') == arg('world_path_house'))">
-        <arg name="x_pos" default="0.0"/>
-        <arg name="y_pos" default="0.0"/>
-        <arg name="z_pos" default="0.0"/>
-        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description"/>
-    </group>
+
+    
 
 
 </launch>

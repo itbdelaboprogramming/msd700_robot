@@ -10,6 +10,8 @@
     <arg name="rviz_config"         default="$(find msd700_visual)/rviz/msd700_navigation.rviz"/>
     <arg name="model"               default="$(find xacro)/xacro    $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
     <arg name="model_sim"           default="$(find xacro)/xacro    $(find msd700_visual)/urdf/turtlebot3_waffle.urdf.xacro"/>
+    <arg name="custom_model"        default="sirius"/>
+    <arg name="is_use_custom_model" default="false"/>
     
     <arg name="odom_topic"          default="/odom" />   
     <!-- <arg name="odom_topic"          default="/odometry/filtered" />    -->
@@ -43,6 +45,8 @@
             <arg name="model"           value="$(arg model_sim)"/>
             <!-- <arg name="odom_topic"      value="$(arg odom_topic)"/>    -->
             <arg name="imu_topic"       value="$(arg imu_topic)"/> 
+            <arg name="custom_model"    value="$(arg custom_model)"/>
+            <arg name="is_use_custom_model" value="$(arg is_use_custom_model)"/>
         </include>
     </group>
 
