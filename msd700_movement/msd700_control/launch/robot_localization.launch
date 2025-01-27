@@ -21,10 +21,18 @@
     </node> -->
 
     <group if="$(arg use_simulator)">
-        <include    file="$(find msd700_simulation)/launch/msd700_world.launch">
-            <arg name="is_use_custom_model" value="$(arg is_use_custom_model)"/>
-            <arg name="model"           value="$(arg custom_model)"/>
-        </include>
+        <group unless="$(arg is_use_custom_model)">
+            <include file="$(find msd700_simulation)/launch/msd700_world.launch">
+                <arg name="is_use_custom_model" value="$(arg is_use_custom_model)"/>
+            </include>
+        </group>
+        
+        <group if="$(arg is_use_custom_model)">
+            <include    file="$(find msd700_simulation)/launch/msd700_world.launch">
+                <arg name="is_use_custom_model" value="$(arg is_use_custom_model)"/>
+                <arg name="model"           value="$(arg custom_model)"/>
+            </include>
+        </group>
     </group>
 
     <group unless="$(arg use_simulator)">

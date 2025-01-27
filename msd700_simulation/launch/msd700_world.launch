@@ -1,7 +1,7 @@
 <launch>
 
     <!-- Modifiable Args -->
-    <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi, sirius]"/>
+    <arg name="model" default="waffle" doc="model type [burger, waffle, waffle_pi, sirius, canopus]"/>
 
     <arg name="is_use_custom_model" default="false" doc="use turtlebot3 or custom model"/>
     
