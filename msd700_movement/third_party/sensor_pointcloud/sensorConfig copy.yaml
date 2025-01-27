@@ -1,0 +1,85 @@
+%YAML 1.2
+---
+# Configuration
+sensor_pointcloud:
+    pointcloudFrame: map
+
+# List of sensors
+sensors:
+    - sensor0
+    - sensor1
+    - sensor2
+    - sensor3
+    - sensor4
+
+sensor0:
+    topic: sensor_hub/range
+    device:
+        type: SRF05
+        pin: 14
+        timeout: 60000
+    transform:
+        frame: sensor0
+        posX: 0.03
+        posY: -0.07
+        posZ: 0.05
+        roll: deg(0)
+        pitch: deg(0)
+        yaw: deg(-90)
+sensor1:
+    topic: sensor_hub/range
+    device:
+        type: SRF10
+        addr: 0xE2
+        timeout: 60000
+    transform:
+        frame: sensor1
+        posX: 0.08
+        posY: -0.05
+        posZ: 0.05
+        roll: deg(0)
+        pitch: deg(0)
+        yaw: deg(-45)
+sensor2:
+    topic: sensor_hub/range
+    device:
+        type: SRF10
+        addr: 0xE4
+        timeout: 60000
+    transform:
+        frame: sensor2
+        posX: 0.10
+        posY: 0.0
+        posZ: 0.05
+        roll: deg(0)
+        pitch: deg(0)
+        yaw: deg(0)
+sensor3:
+    topic: sensor_hub/range
+    device:
+        type: SRF10
+        addr: 0xE6
+        timeout: 60000
+    transform:
+        frame: sensor3
+        posX: 0.08
+        posY: 0.05
+        posZ: 0.05
+        roll: deg(0)
+        pitch: deg(0)
+        yaw: deg(45)
+sensor4:
+    topic: sensor_hub/range
+    device:
+        type: SRF05
+        pin: 16
+        timeout: 60000
+    transform:
+        frame: sensor4
+        posX: 0.03
+        posY: 0.07
+        posZ: 0.05
+        roll: deg(0)
+        pitch: deg(0)
+        yaw: deg(90)
+...
