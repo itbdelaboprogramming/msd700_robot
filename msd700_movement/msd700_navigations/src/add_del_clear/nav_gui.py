@@ -8,7 +8,7 @@ from tkinter import messagebox
 import signal
 import sys
 
-class WebNavGUI:
+class NavGUI:
     def __init__(self):
         rospy.init_node('nav_gui_node')
         self.rate = rospy.Rate(100)
@@ -90,7 +90,6 @@ class WebNavGUI:
         point_msg.pose.pose.orientation.w = 1.0
 
         self.point_pub.publish(point_msg)
-        print(f"Published: {point_msg}")
 
     def on_close(self):
         if messagebox.askokcancel("Exit", "Do you want to Exit?"):
@@ -105,6 +104,6 @@ class WebNavGUI:
 
 if __name__ == '__main__':
     try:
-        WebNavGUI()
+        NavGUI()
     except rospy.ROSInterruptException:
         print("Program interrupted before completion", file=sys.stderr)
