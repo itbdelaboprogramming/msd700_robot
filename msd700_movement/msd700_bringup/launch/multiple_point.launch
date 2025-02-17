@@ -1,9 +1,4 @@
 <launch>
-    <node pkg="msd700_navigations" type="add_del_clear.py"  name="web_topic_func" output="screen"/>
-    <node pkg="msd700_navigations" type="topic_merge.py"    name="web_topic_merger" output="screen"/>
+    <node pkg="msd700_navigations" type="nav_controller.py" name="nav_controller_node" output="screen"/>
+    <node pkg="msd700_navigations" type="nav_gui.py" name="nav_gui_node" output="screen"/>
 </launch>
-
-
-
-<!-- Old -->
-    <!-- <node pkg="msd700_navigations" type="multiple_path.py" name="multiple_point_node" output="screen"/> -->

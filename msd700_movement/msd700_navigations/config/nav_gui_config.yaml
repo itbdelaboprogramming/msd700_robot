@@ -1,0 +1,18 @@
+nav_gui:  
+  topic_point_pub : "/nav_gui/point_cmd"
+  topic_point_sub : "/clicked_point"
+
+  
+  # x: -2.5
+  # y: 1.0 
+  # orientation: 90
+  # home_base_frame: "map"
+  # base_frame: "base_footprint"
+  # topic_pub_location: "/homebase/location"
+  # topic_sub_sethome: "/homebase/sethomebase"
+  # service_change_homebase_rviz: "/homebase/service_change_homebase_rviz"
+  # msg_command: "H"
+  # rate_publish_homebase: 1 
+  # service_goto: "/homebase/goto"
+  # service_goto_cancel: "/homebase/goto_cancel"
+  # is_use_gui: true 

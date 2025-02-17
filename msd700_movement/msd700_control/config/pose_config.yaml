@@ -1,9 +1,9 @@
 raw_sensor:
   compute_period: 10        # ms
-  max_speed_linear: 0.33    # m/s (max: 0.33 m/s)
-  max_speed_angular: 20   # rad/s (max: 3.0 rad/s)
+  max_speed_linear: 0.15    # m/s
+  max_speed_angular: 0.7   # rad/s
   wheel_radius: 2.75        # cm (current prototype's wheel has diameter of 5.5 cm approximately)
-  wheel_distance: 30.0      # cm
+  wheel_distance: 26.0      # cm
   # gear_ratio: 1980.0
   ppr : 960
   use_imu: 1                # set to 1 if you are using IMU as heading
