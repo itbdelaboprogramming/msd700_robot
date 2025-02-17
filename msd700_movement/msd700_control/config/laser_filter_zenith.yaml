@@ -1,0 +1,12 @@
+laser_filter:
+  point_1_x: 0.1
+  point_1_y: 0.2
+  point_2_x: 0.1
+  point_2_y: -0.2
+  point_3_x: 0.35
+  point_3_y: -0.2
+  point_4_x: 0.35
+  point_4_y: 0.2
+  display_rviz: true
+  topic_unfiltered: /scan_unfiltered
+  topic_filtered: /scan

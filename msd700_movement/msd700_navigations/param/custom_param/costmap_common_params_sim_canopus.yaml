@@ -1,0 +1,16 @@
+obstacle_range: 1
+raytrace_range: 1.5
+
+footprint: [[-0.105, -0.105], [-0.105, 0.105], [0.041, 0.105], [0.041, -0.105]]   # turtlebot3
+
+inflation_radius: 0.5
+cost_scaling_factor: 2.0
+
+map_type: costmap
+observation_sources: scan ultrasonik_rear
+# observation_sources: scan
+scan: {sensor_frame: base_scan, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+# ultrasonik_rear: {sensor_frame: ultrasonic_sensor_link, data_type: Range, topic: ultrasonik, marking: true, clearing: false}
+ultrasonik_rear: {sensor_frame: ultrasonic_sensor_link, data_type: PointCloud2, topic: ultrasonik_pointcoud, marking: true, clearing: false}
+
+

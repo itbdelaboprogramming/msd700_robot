@@ -1,0 +1,19 @@
+local_costmap:
+  global_frame: odom
+  robot_base_frame: base_footprint
+
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  transform_tolerance: 0.5
+
+  static_map: false
+  rolling_window: true
+  width: 5
+  height: 5
+  resolution: 0.05
+
+  observation_sources: scan ultrasonik_rear
+  # observation_sources: scan 
+  scan: {sensor_frame: base_scan, data_type: LaserScan, topic: scan, marking: true, clearing: true}
+  # ultrasonik_rear: {sensor_frame: ultrasonic_sensor_link, data_type: Range, topic: ultrasonik, marking: true, clearing: false}
+  ultrasonik_rear: {sensor_frame: ultrasonic_sensor_link, data_type: PointCloud2, topic: ultrasonik_pointcoud, marking: true, clearing: false}
