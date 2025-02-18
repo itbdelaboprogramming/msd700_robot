@@ -64,8 +64,6 @@ class LaserFilterNode(object):
         if self.display_rviz:
             self.marker_pub = rospy.Publisher('visualization_marker', Marker, queue_size=10)
 
-        rospy.loginfo("Laser filter node telah diinisialisasi.")
-
     def scan_callback(self, scan_msg):
         """
         Callback untuk pesan LaserScan.

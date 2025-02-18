@@ -2,20 +2,32 @@
     <arg name="open_rviz" default="false"/>
     <arg name="rviz_config" value="$(find msd700_visual)/rviz/rplidar.rviz"/>
     <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
-    
-    <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
-        <param name="serial_port"         type="string" value="/dev/rplidar"/>
-        <!-- <param name="serial_port"         type="string" value="/dev/ttyUSB0"/> -->
-        <param name="serial_baudrate"     type="int"    value="115200"/>
-        <param name="frame_id"            type="string" value="laser"/>
-        <param name="inverted"            type="bool"   value="false"/>
-        <param name="angle_compensate"    type="bool"   value="true"/>
-    </node>
+    <arg name="serial_port"     default="/dev/rplidar"/>
 
-    <group if="$(arg open_rviz)"> 
-        <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
-          <arg name="rviz_config"       value="$(arg rviz_config)"/>
-          <arg name="model"             value="$(arg model)"/>
+    <arg name="use_custom_model" default="false"/>
+    <arg name="custom_model"     default="sirius"/>
+    
+    <group if="$(arg use_custom_model)">
+        <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+            <param name="serial_port"         type="string" value="/dev/rplidar"/>
+            <!-- <param name="serial_port"         type="string" value="/dev/ttyUSB0"/> -->
+            <param name="serial_baudrate"     type="int"    value="115200"/>
+            <param name="frame_id"            type="string" value="laser"/>
+            <param name="inverted"            type="bool"   value="false"/>
+            <param name="angle_compensate"    type="bool"   value="true"/>
+        </node>
+
+        <group if="$(arg open_rviz)"> 
+            <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
+            <arg name="rviz_config"       value="$(arg rviz_config)"/>
+            <arg name="model"             value="$(arg model)"/>
+            </include>
+        </group>
+    </group>
+
+    <group unless="$(arg use_custom_model)">
+        <include file="$(find msd700_bringup)/launch/$(arg custom_model)/lidar_scanner_$(arg custom_model).launch">
+            <arg name="serial_port" value="$(arg serial_port)"/>
         </include>
     </group>
 </launch>

@@ -2,6 +2,6 @@
 <node pkg="laser_filters" type="scan_to_scan_filter_chain" output="screen" name="laser_filter">
       <remap from="scan" to="scan_unfiltered" />
       <remap from="scan_filtered" to="scan" />
-      <rosparam command="load" file="$(find msd700_control)/config/laser_angle_filter.yaml" />
+      <rosparam command="load" file="$(find msd700_control)/config/custom_model/laser_angle_filter.yaml" />
 </node>
 </launch>
