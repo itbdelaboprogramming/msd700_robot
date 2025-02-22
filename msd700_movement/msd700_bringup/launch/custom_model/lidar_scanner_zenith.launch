@@ -1,29 +1,31 @@
 <launch>
     <arg name="open_rviz" default="false"/>
     <arg name="rviz_config" value="$(find msd700_visual)/rviz/rplidar.rviz"/>
+    <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
 
     <arg name="lidar_left_name" default="lidar1"/>
     <arg name="lidar_right_name" default="lidar2"/>
     
     <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
         <arg name="time" value="1" />
-        <arg name="pkg" value="rplidar_ros" />
-        <arg name="file" value="rplidarNode.launch" />
-        <arg name="value" value="serial_port:=/dev/rplidar serial_baudrate:=115200 frame_id:=base_scan_left inverted:=false angle_compensate:=true" />
+        <arg name="pkg" value="msd700_bringup" />
+        <arg name="file" value="lidar_scanner_single_lidar.launch" />
+        <arg name="value" value="serial_port:=/dev/rplidar1 serial_baudrate:=115200 frame_id:=base_scan_left node_name:=rplidarNode_left" />
         <arg name="node_name" value="rplidarNode_left" />
     </include>
 
     <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
         <arg name="time" value="3" />
-        <arg name="pkg" value="rplidar_ros" />
-        <arg name="file" value="rplidarNode.launch" />
-        <arg name="value" value="serial_port:=/dev/rplidar serial_baudrate:=115200 frame_id:=base_scan_right inverted:=false angle_compensate:=true" />
+        <arg name="pkg" value="msd700_bringup" />
+        <arg name="file" value="lidar_scanner_single_lidar.launch" />
+        <arg name="value" value="serial_port:=/dev/rplidar2 serial_baudrate:=115200 frame_id:=base_scan_right node_name:=rplidarNode_right" />
         <arg name="node_name" value="rplidarNode_right" />
     </include>
 
     <group if="$(arg open_rviz)"> 
         <include file="$(find msd700_bringup)/launch/rviz_launch.launch">
         <arg name="rviz_config"       value="$(arg rviz_config)"/>
+        <arg name="model"             value="$(arg model)"/>
         </include>
     </group>
     
