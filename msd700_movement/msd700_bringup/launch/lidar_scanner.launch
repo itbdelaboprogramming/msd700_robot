@@ -5,7 +5,7 @@
     <arg name="serial_port"     default="/dev/rplidar"/>
 
     <arg name="use_custom_model" default="false"/>
-    <arg name="custom_model"     default="sirius"/>
+    <arg name="custom_model"     default="zenith"/>
     
     <group if="$(arg use_custom_model)">
         <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">

@@ -8,7 +8,7 @@
     <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
         <arg name="time" value="1" />
         <arg name="pkg" value="rplidar_ros" />
-        <arg name="file" value="rplidar.launch" />
+        <arg name="file" value="rplidarNode.launch" />
         <arg name="value" value="serial_port:=/dev/rplidar serial_baudrate:=115200 frame_id:=base_scan_left inverted:=false angle_compensate:=true" />
         <arg name="node_name" value="rplidarNode_left" />
     </include>
@@ -16,7 +16,7 @@
     <include file="$(find timed_roslaunch)/launch/timed_roslaunch.launch">
         <arg name="time" value="3" />
         <arg name="pkg" value="rplidar_ros" />
-        <arg name="file" value="rplidar.launch" />
+        <arg name="file" value="rplidarNode.launch" />
         <arg name="value" value="serial_port:=/dev/rplidar serial_baudrate:=115200 frame_id:=base_scan_right inverted:=false angle_compensate:=true" />
         <arg name="node_name" value="rplidarNode_right" />
     </include>
