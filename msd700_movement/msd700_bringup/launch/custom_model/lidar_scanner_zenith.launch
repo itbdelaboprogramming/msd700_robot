@@ -2,6 +2,7 @@
     <arg name="open_rviz" default="false"/>
     <arg name="rviz_config" value="$(find msd700_visual)/rviz/rplidar.rviz"/>
     <arg name="model"           default="$(find xacro)/xacro $(find msd700_visual)/urdf/irbot.urdf.xacro"/>
+    <arg name="serial_port"     default="/dev/rplidar"/>
 
     <arg name="lidar_left_name" default="lidar1"/>
     <arg name="lidar_right_name" default="lidar2"/>

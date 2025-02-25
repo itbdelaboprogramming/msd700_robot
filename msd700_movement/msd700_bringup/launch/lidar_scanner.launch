@@ -5,10 +5,11 @@
     <arg name="serial_port"     default="/dev/rplidar"/>
 
     <arg name="use_custom_model" default="false"/>
-    <arg name="custom_model"     default="sirius"/>
+    <arg name="custom_model"     default="zenith"/>
+    <arg name="node_name"        default="rplidarNode"/>
     
-    <group if="$(arg use_custom_model)">
-        <node name="rplidarNode"          pkg="rplidar_ros"  type="rplidarNode" output="screen">
+    <group unless="$(arg use_custom_model)">
+        <node name="$(arg node_name)" pkg="rplidar_ros" type="rplidarNode" output="screen">
             <param name="serial_port"         type="string" value="/dev/rplidar"/>
             <!-- <param name="serial_port"         type="string" value="/dev/ttyUSB0"/> -->
             <param name="serial_baudrate"     type="int"    value="115200"/>
@@ -25,8 +26,8 @@
         </group>
     </group>
 
-    <group unless="$(arg use_custom_model)">
-        <include file="$(find msd700_bringup)/launch/$(arg custom_model)/lidar_scanner_$(arg custom_model).launch">
+    <group if="$(arg use_custom_model)">
+        <include file="$(find msd700_bringup)/launch/custom_model/lidar_scanner_$(arg custom_model).launch">
             <arg name="serial_port" value="$(arg serial_port)"/>
         </include>
     </group>
