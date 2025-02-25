@@ -7,6 +7,9 @@ global_costmap:
   transform_tolerance: 0.5
 
   static_map: true
+
+  observation_sources: scan 
+  scan: {sensor_frame: base_link, data_type: LaserScan, topic: scan, marking: true, clearing: true}
  
   # plugins:
   #   - {name: static_layer,        type: "costmap_2d::StaticLayer"}
