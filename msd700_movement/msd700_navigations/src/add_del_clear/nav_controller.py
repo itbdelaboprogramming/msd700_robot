@@ -82,20 +82,24 @@ class NavController:
         self.y_ort = 0.0
         self.z_ort = msg.pose.pose.orientation.z
 
-        if self.command == "Z":
+        if self.command == "STOP":
             self.publish_flag = False
             self.emergency_stop()
             print(f"Flag toggled to: {self.publish_flag}")
-        elif self.command == "P":
+        elif self.command == "PAUSE":
+            self.publish_flag = False
+            self.pause()
+            print(f"Flag toggled to: {self.publish_flag}")
+        elif self.command == "START":
             self.publish_flag = True
             self.canceled_flag = False
             print(f"Starting mode {self.mode}")
             print(f"Loop index set: {self.loop_index}")
-        elif self.command == "S":
+        elif self.command == "SAVE":
             self.save_point()
-        elif self.command == "I":
+        elif self.command == "IMPORT":
             self.import_point()
-        elif self.command == "X":
+        elif self.command == "CLEAR":
             self.clear_point()
         elif self.command in ["M1", "M2"]:
             self.mode = self.command
@@ -139,8 +143,6 @@ class NavController:
             self.point_arr.append(point)
             self.publish_marker(point, Marker.ADD)
             print("Added new point to stack")
-        else:
-            print("Point not included, duplicated")
 
     def delete_point(self):
         threshold = 0.1
@@ -210,12 +212,16 @@ class NavController:
         self.goal_client.wait_for_result()
         state = self.goal_client.get_state()
 
+        print(f"Goal State : {state}")
 
         if state == 2:
             print("Goal Canceled")
             self.canceled_flag = True
         elif state == 3:
             print(f"Goal reached: {goal_point[:3]}")
+        elif state == 4:
+            self.goal_client.cancel_all_goals()
+            print("Failed to reach the goal, please move the robot to open area")
         else:
             print("Failed to reach the goal")
 
@@ -234,9 +240,7 @@ class NavController:
 
             if not self.canceled_flag:
                 if self.mode == "M1":
-                    print("choosen mode M1")
                     if self.forward:
-                        print(f"executing index {self.loop_index}")
                         self.loop_index += 1
                         if self.loop_index == len(self.published_arr) - 1:
                             self.forward = False
@@ -251,7 +255,7 @@ class NavController:
                         self.loop_index = 0
                 else:
                     print("Mode hasn't been chosen")
-            print(f"Published index {self.loop_index}")
+            print(f"Published point {self.loop_index+1}")
 
     def emergency_stop(self):
         self.goal_client.cancel_all_goals()
@@ -264,17 +268,32 @@ class NavController:
         stop_msg.angular.x  = 0
         stop_msg.angular.y  = 0
         stop_msg.angular.z  = 0
+        self.loop_index = 0
 
         self.stop_pub.publish(stop_msg)
         print("Emergency stop issued: Robot halted.")
 
+    def pause(self):
+        self.goal_client.cancel_all_goals()
+
+        stop_msg = Twist()
+        stop_msg.linear.x  = 0
+        stop_msg.linear.y  = 0
+        stop_msg.linear.z  = 0
+        stop_msg.angular.x  = 0
+        stop_msg.angular.y  = 0
+        stop_msg.angular.z  = 0
+
+        self.stop_pub.publish(stop_msg)
+        print("Robot Movement paused")
+
     def run(self):
         while not rospy.is_shutdown():
-            if self.command == "A":
+            if self.command == "ADD":
                 self.add_point()
-            elif self.command == "D":
+            elif self.command == "DEL":
                 self.delete_point()
-            elif self.command == "P":
+            elif self.command == "START":
                 self.execute_navigation()
             self.rate.sleep()
 

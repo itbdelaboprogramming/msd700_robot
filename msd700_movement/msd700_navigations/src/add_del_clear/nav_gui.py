@@ -42,21 +42,24 @@ class NavGUI:
 
     def setup_main_buttons(self):
         # Mode buttons
-        tk.Button(self.main_frame, text="Mode 1", command=lambda: self.set_command("M1"), width=10, height=2).grid(row=0, column=0, padx=10, pady=10)
-        tk.Button(self.main_frame, text="Mode 2", command=lambda: self.set_command("M2"), width=10, height=2).grid(row=0, column=1, padx=10, pady=10)
+        tk.Label(self.main_frame, text="1-2-3-2-1", font=("Arial", 8)).grid(row=0, column=0)
+        tk.Label(self.main_frame, text="1-2-3-1-2", font=("Arial", 8)).grid(row=0, column=1)
+        tk.Button(self.main_frame, text="Mode 1", command=lambda: self.set_command("M1"), width=10, height=1).grid(row=1, column=0, padx=10, pady=2)
+        tk.Button(self.main_frame, text="Mode 2", command=lambda: self.set_command("M2"), width=10, height=1).grid(row=1, column=1, padx=10, pady=2)
 
         # Action buttons
-        tk.Button(self.main_frame, text="Start", command=lambda: self.set_command("P"), width=20, height=3).grid(row=1, column=0, columnspan=2, padx=10, pady=10)
-        tk.Button(self.main_frame, text="Stop", command=lambda: self.set_command("Z"), width=20, height=3).grid(row=2, column=0, columnspan=2, padx=10, pady=10)
-        tk.Button(self.main_frame, text="Edit Points", command=self.show_edit_buttons, width=20, height=3).grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+        tk.Button(self.main_frame, text="Start", command=lambda: self.set_command("START"), width=20, height=2).grid(row=2, column=0, columnspan=2, padx=10, pady=10)
+        tk.Button(self.main_frame, text="Pause", command=lambda: self.set_command("PAUSE"), width=20, height=2).grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+        tk.Button(self.main_frame, text="Stop", command=lambda: self.set_command("STOP"), width=20, height=2).grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+        tk.Button(self.main_frame, text="Edit Points", command=self.show_edit_buttons, width=20, height=2).grid(row=5, column=0, columnspan=2, padx=10, pady=10)
 
     def setup_edit_buttons(self):
         # Edit buttons
-        tk.Button(self.edit_frame, text="Import Point", command=lambda: self.set_command("I"), width=20, height=2).grid(row=0, column=0, padx=10, pady=5)
-        tk.Button(self.edit_frame, text="Add Point", command=lambda: self.set_command("A"), width=20, height=2).grid(row=1, column=0, padx=10, pady=5)
-        tk.Button(self.edit_frame, text="Delete Point", command=lambda: self.set_command("D"), width=20, height=2).grid(row=2, column=0, padx=10, pady=5)
-        tk.Button(self.edit_frame, text="Clear Stored Points", command=lambda: self.set_command("X"), width=20, height=2).grid(row=3, column=0, padx=10, pady=5)
-        tk.Button(self.edit_frame, text="Save Point", command=lambda: self.set_command("S"), width=20, height=2).grid(row=4, column=0, padx=10, pady=5)
+        tk.Button(self.edit_frame, text="Import Point", command=lambda: self.set_command("IMPORT"), width=20, height=2).grid(row=0, column=0, padx=10, pady=5)
+        tk.Button(self.edit_frame, text="Add Point", command=lambda: self.set_command("ADD"), width=20, height=2).grid(row=1, column=0, padx=10, pady=5)
+        tk.Button(self.edit_frame, text="Delete Point", command=lambda: self.set_command("DEL"), width=20, height=2).grid(row=2, column=0, padx=10, pady=5)
+        tk.Button(self.edit_frame, text="Clear Stored Points", command=lambda: self.set_command("CLEAR"), width=20, height=2).grid(row=3, column=0, padx=10, pady=5)
+        tk.Button(self.edit_frame, text="Save Point", command=lambda: self.set_command("SAVE"), width=20, height=2).grid(row=4, column=0, padx=10, pady=5)
         tk.Button(self.edit_frame, text="Done", command=self.show_main_buttons, width=10, height=1).grid(row=5, column=0, sticky='e', padx=10, pady=20)
 
     def show_main_buttons(self):
@@ -70,12 +73,12 @@ class NavGUI:
 
     def set_command(self, command):
         self.current_command = command
-        if command not in ["A", "D"]:
+        if command not in ["ADD", "DEL"]:
             self.publish_command()
 
     def point_callback(self, msg: PointStamped):
         self.x_pos, self.y_pos, self.z_pos = msg.point.x, msg.point.y, msg.point.z
-        if self.current_command in ["A", "D"]:
+        if self.current_command in ["ADD", "DEL"]:
             self.publish_command()
 
     def publish_command(self):
