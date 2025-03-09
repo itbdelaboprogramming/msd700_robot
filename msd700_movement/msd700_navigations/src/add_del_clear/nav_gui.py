@@ -96,6 +96,9 @@ class NavGUI:
 
     def on_close(self):
         if messagebox.askokcancel("Exit", "Do you want to Exit?"):
+            self.set_command("STOP")
+            rospy.sleep(1)
+            self.set_command("CLEAR")
             self.root.quit()
             self.root.destroy()
 

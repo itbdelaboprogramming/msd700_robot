@@ -17,10 +17,9 @@
 #     S : save
 # - Save points in (csv?)
 
-
-
 #=============================================================
 
+import os
 import rospy
 import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
@@ -36,12 +35,16 @@ class NavController:
         rospy.init_node('nav_controller_node')
         self.rate = rospy.Rate(10)
 
+        # Get user home directory
+        self.user_home = os.path.expanduser("~")
+        self.file_path = os.path.join(self.user_home, "catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/saved_point/points.csv")
+
         # Parameters
         self.topic_cmd_sub      = rospy.get_param("~topic_cmd_sub", "/nav_gui/point_cmd")
         self.topic_marker_pub   = rospy.get_param("~topic_marker_pub", "/visualization_marker")
         self.topic_stop_pub     = rospy.get_param("~topic_stop_pub", "/mux/emergency_vel")
-        self.save_file_path     = rospy.get_param("~save_file_path", "/home/itbdelabo/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/saved_point/points.csv")
-        self.import_file_path   = rospy.get_param("~import_file_path", "/home/itbdelabo/catkin_ws/src/msd700_robot/msd700_movement/msd700_navigations/saved_point/points.csv")
+        self.save_file_path     = rospy.get_param("~save_file_path", self.file_path)
+        self.import_file_path   = rospy.get_param("~import_file_path", self.file_path)
 
 
         # Initialize variables
@@ -224,6 +227,9 @@ class NavController:
             print("Failed to reach the goal, please move the robot to open area")
         else:
             print("Failed to reach the goal")
+            self.publish_flag = False
+            print("Navigation sequence has been stopped.")
+            print("Click Start...")
 
     def execute_navigation(self):
         self.published_arr = self.point_arr[:]
@@ -231,9 +237,9 @@ class NavController:
             print("No points stored yet.")
             return
 
-        print("Publishing goals in a continuous sequence...")
+        while self.publish_flag: 
+            print(f"Executing Goal {self.loop_index+1}")
 
-        while self.publish_flag:
             point = self.published_arr[self.loop_index]
             self.publish_goal(point)
             rospy.sleep(0.5)
@@ -299,6 +305,8 @@ class NavController:
 
     def signal_handler(self, sig, frame):
         print("Ctrl-C detected. Exiting gracefully...")
+        self.emergency_stop()
+        self.clear_point()
         sys.exit(0)
 
 if __name__ == '__main__':
